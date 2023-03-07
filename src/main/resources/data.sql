@@ -1,0 +1,2 @@
+insert into MEMBER (MEMBER_ID, PWD, ROLE_GROUP) values ('adv', '$2a$12$MgEeHQnarEOaP4YmxICz1eGp2BRkdvFirHVHGmAaWIDR4hKiItVum', 'ROLE_ADV');
+insert into MEMBER (MEMBER_ID, PWD, ROLE_GROUP) values ('admin', '$2a$12$5gAfweaYifUjut.wYjcghef9bkAUiccQaLkU6O3dUWlcmRnK.Hue.', 'ROLE_ADMIN');
