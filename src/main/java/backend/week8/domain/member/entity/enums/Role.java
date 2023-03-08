@@ -1,4 +1,4 @@
-package backend.week8.domain.member.entity;
+package backend.week8.domain.member.entity.enums;
 
 import lombok.AllArgsConstructor;
 

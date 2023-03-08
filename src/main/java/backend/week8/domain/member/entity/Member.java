@@ -1,5 +1,6 @@
 package backend.week8.domain.member.entity;
 
+import backend.week8.domain.member.entity.enums.Role;
 import lombok.*;
 
 import javax.persistence.*;
@@ -16,7 +17,8 @@ public class Member {
     @Id
     @Column(name = "MEMBER_ID")
     private String memberId;
-    @Column(name = "PWD")
+
+    @Column(name = "PWD", nullable = false)
     private String pwd;
     @Column(name = "ROLE_GROUP")
     @Enumerated(value = EnumType.STRING)
