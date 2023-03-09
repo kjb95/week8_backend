@@ -34,7 +34,6 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username) {
-        System.out.println(username);
         return memberRepository.findById(username)
                 .map(this::createMember)
                 .orElseThrow(() -> new UsernameNotFoundException(username + NOT_FOUND_USERNAME));
