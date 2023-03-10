@@ -8,6 +8,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ItemDto {
+    private String key;
     private String itemNo;
     private String itemName;
     private String adultYn;
