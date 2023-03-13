@@ -10,8 +10,14 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class Kwd {
+
+    public Kwd(String kwdName) {
+        this.kwdName = kwdName;
+        this.sellPossKwdYn = 1;
+        this.manualCnrKwdYn = 1;
+    }
+
     @Id
     @Column(name = "KWD_ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 
 
 @Repository
-public interface AGroupRepository extends JpaRepository<AGroup, String> {
+public interface AGroupRepository extends JpaRepository<AGroup, Long> {
 
 }

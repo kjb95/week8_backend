@@ -13,15 +13,21 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Builder
 public class DadDetBid {
-    @Id
-    @Column(name="DAD_DET_ID")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long dadDetId;
-    @OneToOne
-    @MapsId
-    @JoinColumn(name="DAD_DET_ID")
-    private DadDet dadDet;
 
-    @Column(name="BID_COST")
-    private int bidCost;
+	public DadDetBid(DadDet dadDet, int bidCost) {
+		this.dadDet = dadDet;
+		this.bidCost = bidCost;
+	}
+
+	@Id
+	@Column(name = "DAD_DET_ID")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long dadDetId;
+	@OneToOne
+	@MapsId
+	@JoinColumn(name = "DAD_DET_ID")
+	private DadDet dadDet;
+
+	@Column(name = "BID_COST")
+	private int bidCost;
 }

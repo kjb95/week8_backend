@@ -1,6 +1,9 @@
 package backend.week8.domain.agroup.entity;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -11,8 +14,15 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class AGroup {
+
+	public AGroup(String aGroupName) {
+		this.aGroupName = aGroupName;
+		regTime = LocalDateTime.now();
+		aGroupActYn = 1;
+		aGroupUseConfigYn = 1;
+	}
+
 	@Id
 	@Column(name = "AGROUP_ID")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

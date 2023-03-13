@@ -18,24 +18,34 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Ad {
-    @Id
-    @Column(name = "AD_ID")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long adId;
 
-    @OneToOne
-    @JoinColumn(name = "AGROUP_ID", nullable = false)
-    private AGroup aGroup;
-    @ManyToOne
-    @JoinColumn(name = "ITEM_ID", nullable = false)
-    private Item item;
-    @Column(name = "AD_USE_CONFIG_YN", nullable = false)
-    private int adUseConfigYn;
-    @Column(name = "REG_TIME", nullable = false)
-    private LocalDateTime regTime;
-    @Column(name = "AD_ACT_YN", nullable = false)
-    private int adActYn;
-    @ManyToOne
-    @JoinColumn(name = "ADV_ID", nullable = false)
-    private Adv adv;
+	public Ad(AGroup aGroup, Item item, Adv adv) {
+		this.aGroup = aGroup;
+		this.item = item;
+		this.adUseConfigYn = 1;
+		this.regTime = LocalDateTime.now();
+		this.adActYn = 1;
+		this.adv = adv;
+	}
+
+	@Id
+	@Column(name = "AD_ID")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long adId;
+
+	@OneToOne
+	@JoinColumn(name = "AGROUP_ID", nullable = false)
+	private AGroup aGroup;
+	@ManyToOne
+	@JoinColumn(name = "ITEM_ID", nullable = false)
+	private Item item;
+	@Column(name = "AD_USE_CONFIG_YN", nullable = false)
+	private int adUseConfigYn;
+	@Column(name = "REG_TIME", nullable = false)
+	private LocalDateTime regTime;
+	@Column(name = "AD_ACT_YN", nullable = false)
+	private int adActYn;
+	@ManyToOne
+	@JoinColumn(name = "ADV_ID", nullable = false)
+	private Adv adv;
 }

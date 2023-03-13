@@ -17,27 +17,38 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 public class DadDet {
-    @Id
-    @Column(name = "DAD_DET_ID")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long dadDetId;
 
-    @ManyToOne
-    @JoinColumn(name = "AD_ID", nullable = false)
-    private Ad ad;
-    @ManyToOne
-    @JoinColumn(name = "KWD_ID", nullable = false)
-    private Kwd kwd;
-    @Column(name = "DAD_CNR_STATUS", nullable = false)
-    @Enumerated(EnumType.STRING)
-    private DadCnrStatus dadCnrStatus;
-    @OneToOne
-    @JoinColumn(name = "CNR_REQ_ID", nullable = false)
-    private CnrReq cnrReq;
-    @Column(name = "DAD_USE_CONFIG_YN", nullable = false)
-    private int dadUseConfigYn;
-    @Column(name = "DAD_ACT_YN", nullable = false)
-    private int dadActYn;
-    @Column(name = "REG_TIME", nullable = false)
-    private LocalDateTime regTime;
+	public DadDet(Ad ad, Kwd kwd, CnrReq cnrReq) {
+		this.ad = ad;
+		this.kwd = kwd;
+		this.dadCnrStatus = DadCnrStatus.APPROVAL;
+		this.cnrReq = cnrReq;
+		this.dadUseConfigYn = 1;
+		this.dadActYn = 1;
+		this.regTime = LocalDateTime.now();
+	}
+
+	@Id
+	@Column(name = "DAD_DET_ID")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long dadDetId;
+
+	@ManyToOne
+	@JoinColumn(name = "AD_ID", nullable = false)
+	private Ad ad;
+	@ManyToOne
+	@JoinColumn(name = "KWD_ID", nullable = false)
+	private Kwd kwd;
+	@Column(name = "DAD_CNR_STATUS", nullable = false)
+	@Enumerated(EnumType.STRING)
+	private DadCnrStatus dadCnrStatus;
+	@OneToOne
+	@JoinColumn(name = "CNR_REQ_ID", nullable = false)
+	private CnrReq cnrReq;
+	@Column(name = "DAD_USE_CONFIG_YN", nullable = false)
+	private int dadUseConfigYn;
+	@Column(name = "DAD_ACT_YN", nullable = false)
+	private int dadActYn;
+	@Column(name = "REG_TIME", nullable = false)
+	private LocalDateTime regTime;
 }
