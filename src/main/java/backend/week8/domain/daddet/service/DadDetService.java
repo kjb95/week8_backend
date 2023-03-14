@@ -31,7 +31,9 @@ public class DadDetService {
 
 	private void registerDirectAdDetails(Ad ad, KeywordDto keyword) {
 		CnrReq cnrReq = cnrReqRepository.save(new CnrReq());
-		Kwd kwd = kwdRepository.save(new Kwd(keyword.getKeywordName()));
+		Kwd kwd = kwdRepository.findKwdByKwdName(keyword.getKeywordName())
+				.orElseGet(() -> new Kwd(keyword.getKeywordName()));
+		kwd = kwdRepository.save(kwd);
 		DadDet dadDet = new DadDet(ad, kwd, cnrReq);
 		dadDetBidRepository.save(new DadDetBid(dadDet, keyword.getBid()));
 		cnrReq.setDadDetId(dadDet.getDadDetId());
