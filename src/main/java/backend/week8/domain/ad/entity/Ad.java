@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.mapping.ToOne;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -20,7 +21,7 @@ import java.time.LocalDateTime;
 public class Ad {
 
 	public Ad(AGroup aGroup, Item item, Adv adv) {
-		this.aGroup = aGroup;
+		this.agroup = aGroup;
 		this.item = item;
 		this.adUseConfigYn = 1;
 		this.regTime = LocalDateTime.now();
@@ -33,9 +34,9 @@ public class Ad {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long adId;
 
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name = "AGROUP_ID", nullable = false)
-	private AGroup aGroup;
+	private AGroup agroup;
 	@ManyToOne
 	@JoinColumn(name = "ITEM_ID", nullable = false)
 	private Item item;

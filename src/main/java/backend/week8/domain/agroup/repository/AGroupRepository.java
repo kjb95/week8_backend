@@ -4,8 +4,11 @@ import backend.week8.domain.agroup.entity.AGroup;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 
 @Repository
 public interface AGroupRepository extends JpaRepository<AGroup, Long> {
+	List<AGroup> findByAgroupNameContains(String aGroupName);
 
 }

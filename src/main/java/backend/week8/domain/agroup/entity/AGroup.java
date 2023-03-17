@@ -17,23 +17,23 @@ import java.time.LocalDateTime;
 public class AGroup {
 
 	public AGroup(String aGroupName) {
-		this.aGroupName = aGroupName;
+		this.agroupName = aGroupName;
 		regTime = LocalDateTime.now();
-		aGroupActYn = 1;
-		aGroupUseConfigYn = 1;
+		agroupActYn = 1;
+		agroupUseConfigYn = 1;
 	}
 
 	@Id
 	@Column(name = "AGROUP_ID")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long aGroupId;
+	private Long agroupId;
 
 	@Column(name = "AGROUP_NAME", nullable = false)
-	private String aGroupName;
+	private String agroupName;
 	@Column(name = "REG_TIME", nullable = false)
 	private LocalDateTime regTime;
 	@Column(name = "AGROUP_ACT_YN", nullable = false)
-	private int aGroupActYn;
+	private int agroupActYn;
 	@Column(name = "AGROUP_USE_CONFIG_YN", nullable = false)
-	private int aGroupUseConfigYn;
+	private int agroupUseConfigYn;
 }
