@@ -1,14 +1,10 @@
 package backend.week8.domain.agroup.controller;
 
-import backend.week8.domain.agroup.dto.FindAGroupResponseDto;
-import backend.week8.domain.agroup.dto.FindAllAGroupIdAndNameResponseDto;
+import backend.week8.domain.agroup.dto.*;
 import backend.week8.domain.agroup.service.AGroupService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
@@ -34,5 +30,35 @@ public class AGroupController {
 		FindAGroupResponseDto findAGroupResponseDto = aGroupService.findAGroup(groupName);
 		return ResponseEntity.ok()
 				.body(findAGroupResponseDto);
+	}
+
+	/**
+	 * 광고그룹 사용 설정 변경
+	 */
+	@PutMapping("/use-config")
+	public ResponseEntity<Void> updateAdGroupUseConfig(@RequestBody UpdateAdGroupUseConfig updateAdGroupUseConfig) {
+		aGroupService.updateAdGroupUseConfig(updateAdGroupUseConfig);
+		return ResponseEntity.ok()
+				.build();
+	}
+
+	/**
+	 * 광고그룹 등록
+	 */
+	@PostMapping
+	public ResponseEntity<Void> registerAdGroup(@RequestBody RegisterAdGroupRequestDto registerAdGroupRequestDto) {
+		aGroupService.registerAGroupByName(registerAdGroupRequestDto.getAdGroupName());
+		return ResponseEntity.ok()
+				.build();
+	}
+
+	/**
+	 * 광고 그룹 활성 여부 끄기
+	 */
+	@PutMapping("/act-off")
+	public ResponseEntity<Void> updateAdGroupActOff(@RequestBody UpdateAdGroupActOff updateAdGroupActOff) {
+		aGroupService.updateAdGroupActOff(updateAdGroupActOff);
+		return ResponseEntity.ok()
+				.build();
 	}
 }

@@ -26,7 +26,7 @@ public class AdController {
 	 */
 	@PostMapping
 	public ResponseEntity<Void> registerAd(@RequestBody RegisterAdRequestDto registerAdRequestDto) {
-		AGroup aGroup = aGroupService.registerAGroup(registerAdRequestDto.getAgroupId());
+		AGroup aGroup = aGroupService.registerAGroupById(registerAdRequestDto.getAgroupId());
 		Ad ad = adService.registerAd(aGroup, registerAdRequestDto.getItemId(), registerAdRequestDto.getAdvId());
 		dadDetService.registerDirectAdDetails(ad, registerAdRequestDto.getKeywordList());
 		return ResponseEntity.ok()

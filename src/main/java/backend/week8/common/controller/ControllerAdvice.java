@@ -46,10 +46,17 @@ public class ControllerAdvice {
         return new ResponseEntity<>(errorResponse, HttpStatus.valueOf(errorCode.getStatus()));
     }
 
-    @ExceptionHandler({AuthenticationException.class})
+    @ExceptionHandler(AuthenticationException.class)
     public ResponseEntity<ErrorResponse> handleAuthenticationException(AuthenticationException e) {
         ErrorCode errorCode = ErrorCode.UNAUTHORIZED_USER;
         ErrorResponse errorResponse = new ErrorResponse(errorCode.getCode(), errorCode.getDescription());
+        return new ResponseEntity<>(errorResponse, HttpStatus.valueOf(errorCode.getStatus()));
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<ErrorResponse> handleIllegalArgumentException(IllegalArgumentException e) {
+        ErrorCode errorCode = ErrorCode.INVALID_ARGUMENT;
+        ErrorResponse errorResponse = new ErrorResponse(errorCode.getCode(), e.getMessage());
         return new ResponseEntity<>(errorResponse, HttpStatus.valueOf(errorCode.getStatus()));
     }
 
