@@ -8,7 +8,6 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-@Builder
 public class AGroupDto {
 	private long key;
 	private String agroupName;

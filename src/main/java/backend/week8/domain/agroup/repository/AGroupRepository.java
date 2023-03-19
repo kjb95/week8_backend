@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 
 @Repository
@@ -28,4 +29,5 @@ public interface AGroupRepository extends JpaRepository<AGroup, Long> {
 	@Query("UPDATE AGroup ag SET ag.agroupActYn = 0 WHERE ag.agroupId IN :agroupIds")
 	void updateActOff(List<Long> agroupIds);
 
+	Optional<AGroup> findByAgroupIdAndAgroupActYn(Long agroupId, int agroupActYn);
 }

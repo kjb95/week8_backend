@@ -9,6 +9,6 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class FindAllAGroupIdAndNameResponseDto {
+public class FindAllAdGroupIdAndNameResponseDto {
 	private List<AGroupIdAndNameDto> agroups;
 }
