@@ -98,11 +98,7 @@ public class AGroupService {
 	public FindAdGroupResponseDto findAdGroup(FindAdGroupRequestDto findAdGroupRequestDto) {
 		AGroup aGroup = aGroupRepository.findByAgroupIdAndAgroupActYn(findAdGroupRequestDto.getAdGroupId(), 1)
 				.orElseThrow(() -> new NoSuchElementException(NOT_FOUND_AD_GROUP_ID));
-		List<AdItemDto> adItemDtos = adRepository.findByAgroup_AgroupIdAndAdv_AdvId(aGroup.getAgroupId(), findAdGroupRequestDto.getAdvId())
-				.stream()
-				.map(AGroupService::createAdItemDto)
-				.collect(Collectors.toList());
-		return new FindAdGroupResponseDto(aGroup.getAgroupName(), aGroup.getAgroupUseConfigYn(), aGroup.getRegTime(), adItemDtos);
+		return new FindAdGroupResponseDto(aGroup.getAgroupName(), aGroup.getAgroupUseConfigYn(), aGroup.getRegTime());
 	}
 
 	private static AdItemDto createAdItemDto(Ad ad) {

@@ -1,5 +1,7 @@
 package backend.week8.domain.ad.controller;
 
+import backend.week8.domain.ad.dto.FindItemsInAdGroupRequestDto;
+import backend.week8.domain.ad.dto.FindItemsInAdGroupResponseDto;
 import backend.week8.domain.ad.dto.RegisterAdRequestDto;
 import backend.week8.domain.ad.entity.Ad;
 import backend.week8.domain.ad.service.AdService;
@@ -31,5 +33,15 @@ public class AdController {
 		dadDetService.registerDirectAdDetails(ad, registerAdRequestDto.getKeywordList());
 		return ResponseEntity.ok()
 				.build();
+	}
+
+	/**
+	 * 조건(상품 명, 상품 번호)에 따라 한 광고 그룹에 속한 상품들 조회
+	 */
+	@PostMapping("/items/search")
+	public ResponseEntity<FindItemsInAdGroupResponseDto> findItemsInAdGroup(@RequestBody FindItemsInAdGroupRequestDto findItemsInAdGroupRequestDto) {
+		FindItemsInAdGroupResponseDto findItemsInAdGroupResponseDto = adService.findItemsInAdGroup(findItemsInAdGroupRequestDto);
+		return ResponseEntity.ok()
+				.body(findItemsInAdGroupResponseDto);
 	}
 }

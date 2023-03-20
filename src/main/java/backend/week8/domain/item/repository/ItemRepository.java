@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface ItemRepository extends JpaRepository<Item, Long> {
-    List<Item> findByItemNameContainsAndItemNoContains(String itemName, String itemNo);
+	List<Item> findByItemNameContainsAndItemNoContains(String itemName, String itemNo);
 }
