@@ -1,16 +1,16 @@
-package backend.week8.domain.agroup.dto;
+package backend.week8.domain.ad.dto;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
 @AllArgsConstructor
-public class AGroupDto {
+public class FindAdGroupsDto {
 	private long key;
 	private String agroupName;
-	private String agroupUseConfigYn;
-	private String itemCountLiveAndAll;
+	private int agroupUseConfigYn;
+	private long countAdAct;
+	private long countAdUseConfig;
 }

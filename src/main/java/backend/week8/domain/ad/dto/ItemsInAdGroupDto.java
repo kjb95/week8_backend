@@ -9,5 +9,5 @@ public class ItemsInAdGroupDto {
 	private Long itemId;
 	private String itemNo;
 	private String itemName;
-	private boolean adUseConfigYn;
+	private String adUseConfigYn;
 }

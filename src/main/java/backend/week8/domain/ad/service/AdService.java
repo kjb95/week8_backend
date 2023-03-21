@@ -1,32 +1,59 @@
 package backend.week8.domain.ad.service;
 
-import backend.week8.domain.ad.dto.FindItemsInAdGroupRequestDto;
-import backend.week8.domain.ad.dto.FindItemsInAdGroupResponseDto;
-import backend.week8.domain.ad.dto.ItemsInAdGroupDto;
+import backend.week8.domain.ad.dto.KeywordDto;
+import backend.week8.domain.ad.dto.RegisterAdRequestDto;
 import backend.week8.domain.ad.entity.Ad;
 import backend.week8.domain.ad.repository.AdRepository;
 import backend.week8.domain.adv.entity.Adv;
 import backend.week8.domain.adv.repository.AdvRepository;
 import backend.week8.domain.agroup.entity.AGroup;
+import backend.week8.domain.agroup.repository.AGroupRepository;
+import backend.week8.domain.cnrReq.entity.CnrReq;
+import backend.week8.domain.cnrReq.repository.CnrReqRepository;
+import backend.week8.domain.daddet.entity.DadDet;
+import backend.week8.domain.daddetbid.entity.DadDetBid;
+import backend.week8.domain.daddetbid.repository.DadDetBidRepository;
 import backend.week8.domain.item.entity.Item;
 import backend.week8.domain.item.repository.ItemRepository;
+import backend.week8.domain.kwd.entity.Kwd;
+import backend.week8.domain.kwd.repository.KwdRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class AdService {
+
+	private static final String NUMBER_REGEX = "-?\\d+(\\.\\d+)?";
 	private final AdRepository adRepository;
 	private final ItemRepository itemRepository;
 	private final AdvRepository advRepository;
+	private final AGroupRepository aGroupRepository;
+	private final KwdRepository kwdRepository;
+	private final CnrReqRepository cnrReqRepository;
+	private final DadDetBidRepository dadDetBidRepository;
 
 	/**
 	 * 광고 등록
 	 */
-	public Ad registerAd(AGroup aGroup, long itemId, String advId) {
+	public void registerAd(RegisterAdRequestDto registerAdRequestDto) {
+		AGroup aGroup = registerAGroupById(registerAdRequestDto.getAgroupId());
+		Ad ad = registerAd(aGroup, registerAdRequestDto.getItemId(), registerAdRequestDto.getAdvId());
+		registerDirectAdDetails(ad, registerAdRequestDto.getKeywordList());
+	}
+
+	private AGroup registerAGroupById(String aGroupId) {
+		if (!aGroupId.matches(NUMBER_REGEX)) {
+			return aGroupRepository.save(new AGroup(aGroupId));
+		}
+		AGroup aGroup = aGroupRepository.findById(Long.parseLong(aGroupId))
+				.orElseGet(() -> new AGroup(aGroupId));
+		return aGroupRepository.save(aGroup);
+	}
+
+	private Ad registerAd(AGroup aGroup, long itemId, String advId) {
 		Item item = itemRepository.findById(itemId)
 				.get();
 		Adv adv = advRepository.findById(advId)
@@ -35,19 +62,18 @@ public class AdService {
 		return adRepository.save(ad);
 	}
 
-	/**
-	 * 조건(상품 명, 상품 번호)에 따라 한 광고 그룹에 속한 상품들 조회
-	 */
-	public FindItemsInAdGroupResponseDto findItemsInAdGroup(FindItemsInAdGroupRequestDto findItemsInAdGroupRequestDto) {
-		List<ItemsInAdGroupDto> items = adRepository.findAdGroupWithItem(findItemsInAdGroupRequestDto.getItemName(), findItemsInAdGroupRequestDto.getItemNo(), findItemsInAdGroupRequestDto.getAdvId(), findItemsInAdGroupRequestDto.getAdGroupId())
-				.stream()
-				.map(this::createItemsInAdGroupDto)
-				.collect(Collectors.toList());
-		return new FindItemsInAdGroupResponseDto(items);
+	private void registerDirectAdDetails(Ad ad, List<KeywordDto> keywordList) {
+		keywordList.forEach(keyword -> registerDirectAdDetails(ad, keyword));
 	}
 
-	private ItemsInAdGroupDto createItemsInAdGroupDto(Ad ad) {
-		Item item = ad.getItem();
-		return new ItemsInAdGroupDto(item.getItemId(), item.getItemNo(), item.getItemName(), ad.getAdUseConfigYn() == 1);
+	private void registerDirectAdDetails(Ad ad, KeywordDto keyword) {
+		CnrReq cnrReq = cnrReqRepository.save(new CnrReq());
+		Kwd kwd = kwdRepository.findKwdByKwdName(keyword.getKeywordName())
+				.orElseGet(() -> new Kwd(keyword.getKeywordName()));
+		kwd = kwdRepository.save(kwd);
+		DadDet dadDet = new DadDet(ad, kwd, cnrReq);
+		dadDetBidRepository.save(new DadDetBid(dadDet, keyword.getBid()));
+		cnrReq.setDadDetId(dadDet.getDadDetId());
+		cnrReqRepository.save(cnrReq);
 	}
 }
