@@ -1,6 +1,6 @@
 package backend.week8.domain.member.controller;
 
-import backend.week8.domain.member.dto.RoleResponseDto;
+import backend.week8.domain.member.dto.response.RoleResponseDto;
 import backend.week8.domain.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

@@ -1,9 +1,9 @@
 package backend.week8.domain.item.controller;
 
-import backend.week8.domain.ad.dto.FindItemsInAdGroupRequestDto;
-import backend.week8.domain.ad.dto.FindItemsInAdGroupResponseDto;
-import backend.week8.domain.item.dto.FindItemsRequestDto;
-import backend.week8.domain.item.dto.FindItemsResponseDto;
+import backend.week8.domain.item.dto.request.FindItemsInAdGroupRequestDto;
+import backend.week8.domain.item.dto.response.FindItemsInAdGroupResponseDto;
+import backend.week8.domain.item.dto.request.FindItemsRequestDto;
+import backend.week8.domain.item.dto.response.FindItemsResponseDto;
 import backend.week8.domain.item.service.ItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

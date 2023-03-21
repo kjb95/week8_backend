@@ -1,13 +1,15 @@
 package backend.week8.domain.agroup.service;
 
-import backend.week8.domain.ad.dto.AdGroupDto;
-import backend.week8.domain.ad.dto.FindAdGroupsDto;
-import backend.week8.domain.ad.entity.Ad;
+import backend.week8.domain.agroup.dto.request.FindAdGroupRequestDto;
+import backend.week8.domain.agroup.dto.request.FindAllAdGroupResponseDto;
+import backend.week8.domain.agroup.dto.request.UpdateAdGroupActOffRequestDto;
+import backend.week8.domain.agroup.dto.request.UpdateAdGroupNameRequestDto;
+import backend.week8.domain.agroup.dto.response.*;
+import backend.week8.domain.agroup.dto.repository.FindAdGroupsDto;
 import backend.week8.domain.ad.repository.AdRepository;
 import backend.week8.domain.agroup.dto.*;
 import backend.week8.domain.agroup.entity.AGroup;
 import backend.week8.domain.agroup.repository.AGroupRepository;
-import backend.week8.domain.item.entity.Item;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -27,9 +29,9 @@ public class AGroupService {
 	 * 모든 광고 그룹의 아이디와 이름만 조회
 	 */
 	public FindAllAdGroupIdAndNameResponseDto findAllAdGroupIdAndName() {
-		List<AGroupIdAndNameDto> aGroups = aGroupRepository.findAllByAgroupActYn(1)
+		List<AdGroupIdAndNameResponseDto> aGroups = aGroupRepository.findAllByAgroupActYn(1)
 				.stream()
-				.map(aGroup -> new AGroupIdAndNameDto(aGroup.getAgroupId(), aGroup.getAgroupName()))
+				.map(aGroup -> new AdGroupIdAndNameResponseDto(aGroup.getAgroupId(), aGroup.getAgroupName()))
 				.collect(Collectors.toList());
 		return new FindAllAdGroupIdAndNameResponseDto(aGroups);
 	}
@@ -37,26 +39,26 @@ public class AGroupService {
 	/**
 	 * 조건에 따른 그룹 검색
 	 */
-	public FindAdGroupsResponseDto findAdGroups(String groupNameCondition) {
+	public FindAllAdGroupResponseDto findAllAdGroup(String groupNameCondition) {
 		List<FindAdGroupsDto> findAdGroupsDtos = aGroupRepository.findAdGroups(groupNameCondition);
-		List<AdGroupDto> adGroups = findAdGroupsDtos.stream()
+		List<AdGroupResponseDto> adGroups = findAdGroupsDtos.stream()
 				.map(group -> createAGroupDto(group))
 				.collect(Collectors.toList());
-		return new FindAdGroupsResponseDto(adGroups);
+		return new FindAllAdGroupResponseDto(adGroups);
 	}
 
-	private AdGroupDto createAGroupDto(FindAdGroupsDto group) {
+	private AdGroupResponseDto createAGroupDto(FindAdGroupsDto group) {
 		String isGroupOn = group.getAgroupUseConfigYn() == 1 ? "ON" : "OFF";
 		String itemCountLiveAndAll = group.getCountAdUseConfig() + " / " + group.getCountAdAct();
-		return new AdGroupDto(group.getKey(), group.getAgroupName(), isGroupOn, itemCountLiveAndAll);
+		return new AdGroupResponseDto(group.getKey(), group.getAgroupName(), isGroupOn, itemCountLiveAndAll);
 	}
 
 	/**
 	 * 광고그룹 사용 설정 변경
 	 */
-	public void updateAdGroupUseConfig(UpdateAdGroupUseConfig updateAdGroupUseConfig) {
-		int useConfig = updateAdGroupUseConfig.isOn() ? 1 : 0;
-		aGroupRepository.updateUseConfig(updateAdGroupUseConfig.getAdGroupIds(), useConfig);
+	public void updateAdGroupUseConfig(UpdateAdGroupUseConfigRequestDto updateAdGroupUseConfigRequestDto) {
+		int useConfig = updateAdGroupUseConfigRequestDto.isOn() ? 1 : 0;
+		aGroupRepository.updateUseConfig(updateAdGroupUseConfigRequestDto.getAdGroupIds(), useConfig);
 	}
 
 	/**
@@ -72,8 +74,8 @@ public class AGroupService {
 	/**
 	 * 광고 그룹 활성 여부 끄기
 	 */
-	public void updateAdGroupActOff(UpdateAdGroupActOff updateAdGroupActOff) {
-		aGroupRepository.updateActOff(updateAdGroupActOff.getAdGroupIds());
+	public void updateAdGroupActOff(UpdateAdGroupActOffRequestDto updateAdGroupActOffRequestDto) {
+		aGroupRepository.updateActOff(updateAdGroupActOffRequestDto.getAdGroupIds());
 	}
 
 	/**

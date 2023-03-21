@@ -1,4 +1,4 @@
-package backend.week8.domain.ad.dto;
+package backend.week8.domain.ad.dto.request;
 
 import lombok.*;
 
@@ -10,5 +10,5 @@ public class RegisterAdRequestDto {
 	private String agroupId;
 	private long itemId;
 	private String advId;
-	private List<KeywordDto> keywordList;
+	private List<RegisterAdKeywordRequestDto> keywordList;
 }

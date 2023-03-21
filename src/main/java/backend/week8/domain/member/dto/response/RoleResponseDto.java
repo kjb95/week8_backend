@@ -1,4 +1,4 @@
-package backend.week8.domain.member.dto;
+package backend.week8.domain.member.dto.response;
 
 import lombok.*;
 

@@ -1,5 +1,4 @@
-package backend.week8.domain.ad.dto;
-
+package backend.week8.domain.item.dto.request;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -8,7 +7,6 @@ import lombok.Setter;
 @Setter
 public class FindItemsInAdGroupRequestDto {
 	private Long adGroupId;
-	private String advId;
 	private String itemName;
 	private String itemNo;
 }

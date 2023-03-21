@@ -1,4 +1,4 @@
-package backend.week8.domain.ad.dto;
+package backend.week8.domain.agroup.dto.repository;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

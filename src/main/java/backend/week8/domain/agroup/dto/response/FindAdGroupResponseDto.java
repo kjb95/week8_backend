@@ -1,4 +1,4 @@
-package backend.week8.domain.agroup.dto;
+package backend.week8.domain.agroup.dto.response;
 
 import lombok.Getter;
 import lombok.Setter;

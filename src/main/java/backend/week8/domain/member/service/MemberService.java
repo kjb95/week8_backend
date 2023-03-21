@@ -1,6 +1,6 @@
 package backend.week8.domain.member.service;
 
-import backend.week8.domain.member.dto.RoleResponseDto;
+import backend.week8.domain.member.dto.response.RoleResponseDto;
 import backend.week8.domain.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

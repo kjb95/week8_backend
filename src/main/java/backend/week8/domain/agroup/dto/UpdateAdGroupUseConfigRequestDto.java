@@ -7,7 +7,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public class UpdateAdGroupUseConfig {
+public class UpdateAdGroupUseConfigRequestDto {
 	private List<Long> adGroupIds;
 	private boolean on;
 }

@@ -1,8 +1,8 @@
 package backend.week8.domain.adv.service;
 
-import backend.week8.domain.adv.dto.FindAdvResponseDto;
-import backend.week8.domain.adv.dto.UpdateAdIngActRequestDto;
-import backend.week8.domain.adv.dto.UpdateDayLimitBudgetRequestDto;
+import backend.week8.domain.adv.dto.response.FindAdvResponseDto;
+import backend.week8.domain.adv.dto.request.UpdateAdIngActRequestDto;
+import backend.week8.domain.adv.dto.request.UpdateDayLimitBudgetRequestDto;
 import backend.week8.domain.adv.entity.Adv;
 import backend.week8.domain.adv.repository.AdvRepository;
 import lombok.RequiredArgsConstructor;

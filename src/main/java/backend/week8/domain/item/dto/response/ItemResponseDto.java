@@ -1,12 +1,12 @@
-package backend.week8.domain.item.dto;
+package backend.week8.domain.item.dto.response;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class ItemDto {
-	public ItemDto(Long key, String itemNo, String itemName, int adultYn, int itemOrgCost, int itemActYn) {
+public class ItemResponseDto {
+	public ItemResponseDto(Long key, String itemNo, String itemName, int adultYn, int itemOrgCost, int itemActYn) {
 		this.key = key;
 		this.itemNo = itemNo;
 		this.itemName = itemName;

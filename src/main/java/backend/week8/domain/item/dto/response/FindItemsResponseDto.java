@@ -1,4 +1,4 @@
-package backend.week8.domain.item.dto;
+package backend.week8.domain.item.dto.response;
 
 
 import lombok.*;
@@ -11,5 +11,5 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class FindItemsResponseDto {
-    private List<ItemDto> items;
+    private List<ItemResponseDto> items;
 }

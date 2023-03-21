@@ -1,4 +1,4 @@
-package backend.week8.domain.ad.dto;
+package backend.week8.domain.item.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,5 +10,5 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 public class FindItemsInAdGroupResponseDto {
-	List<ItemsInAdGroupDto> items;
+	List<ItemInAdGroupResponseDto> items;
 }

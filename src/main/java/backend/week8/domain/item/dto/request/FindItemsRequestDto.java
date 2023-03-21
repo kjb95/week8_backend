@@ -1,4 +1,4 @@
-package backend.week8.domain.item.dto;
+package backend.week8.domain.item.dto.request;
 
 import lombok.*;
 
@@ -8,6 +8,6 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class FindItemsRequestDto {
-    private String itemName;
-    private String itemNo;
+	private String itemName;
+	private String itemNo;
 }

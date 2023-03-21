@@ -1,7 +1,9 @@
 package backend.week8.domain.ad.service;
 
-import backend.week8.domain.ad.dto.KeywordDto;
-import backend.week8.domain.ad.dto.RegisterAdRequestDto;
+import backend.week8.domain.ad.dto.request.RegisterAdKeywordRequestDto;
+import backend.week8.domain.ad.dto.request.RegisterAdRequestDto;
+import backend.week8.domain.ad.dto.request.UpdateAdActOffRequestDto;
+import backend.week8.domain.ad.dto.request.UpdateAdUseConfigAndDadUseConfigRequestDto;
 import backend.week8.domain.ad.entity.Ad;
 import backend.week8.domain.ad.repository.AdRepository;
 import backend.week8.domain.adv.entity.Adv;
@@ -11,6 +13,7 @@ import backend.week8.domain.agroup.repository.AGroupRepository;
 import backend.week8.domain.cnrReq.entity.CnrReq;
 import backend.week8.domain.cnrReq.repository.CnrReqRepository;
 import backend.week8.domain.daddet.entity.DadDet;
+import backend.week8.domain.daddet.repository.DadDetRepository;
 import backend.week8.domain.daddetbid.entity.DadDetBid;
 import backend.week8.domain.daddetbid.repository.DadDetBidRepository;
 import backend.week8.domain.item.entity.Item;
@@ -34,6 +37,7 @@ public class AdService {
 	private final KwdRepository kwdRepository;
 	private final CnrReqRepository cnrReqRepository;
 	private final DadDetBidRepository dadDetBidRepository;
+	private final DadDetRepository dadDetRepository;
 
 	/**
 	 * 광고 등록
@@ -62,11 +66,11 @@ public class AdService {
 		return adRepository.save(ad);
 	}
 
-	private void registerDirectAdDetails(Ad ad, List<KeywordDto> keywordList) {
+	private void registerDirectAdDetails(Ad ad, List<RegisterAdKeywordRequestDto> keywordList) {
 		keywordList.forEach(keyword -> registerDirectAdDetails(ad, keyword));
 	}
 
-	private void registerDirectAdDetails(Ad ad, KeywordDto keyword) {
+	private void registerDirectAdDetails(Ad ad, RegisterAdKeywordRequestDto keyword) {
 		CnrReq cnrReq = cnrReqRepository.save(new CnrReq());
 		Kwd kwd = kwdRepository.findKwdByKwdName(keyword.getKeywordName())
 				.orElseGet(() -> new Kwd(keyword.getKeywordName()));
@@ -75,5 +79,21 @@ public class AdService {
 		dadDetBidRepository.save(new DadDetBid(dadDet, keyword.getBid()));
 		cnrReq.setDadDetId(dadDet.getDadDetId());
 		cnrReqRepository.save(cnrReq);
+	}
+
+	/**
+	 * 광고 사용 설정 여부, 직접광고 사용 설정 여부 변경
+	 */
+	public void updateAdUseConfigAndDadUseConfig(UpdateAdUseConfigAndDadUseConfigRequestDto updateAdUseConfigAndDadUseConfigRequestDto) {
+		int isOn = updateAdUseConfigAndDadUseConfigRequestDto.isOn() ? 1 : 0;
+		adRepository.updateUseConfig(updateAdUseConfigAndDadUseConfigRequestDto.getItemIds(), isOn);
+		dadDetRepository.updateUseConfig(updateAdUseConfigAndDadUseConfigRequestDto.getItemIds(), isOn);
+	}
+
+	/**
+	 * 광고 활성 여부 끄기
+	 */
+	public void updateAdActOff(UpdateAdActOffRequestDto updateAdActOffRequestDto) {
+		adRepository.updateActOff(updateAdActOffRequestDto.getItemIds());
 	}
 }
