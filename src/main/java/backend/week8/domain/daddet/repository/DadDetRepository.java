@@ -16,5 +16,8 @@ public interface DadDetRepository extends JpaRepository<DadDet, Long> {
 	@Modifying(clearAutomatically = true)
 	@Query("UPDATE DadDet d SET d.dadUseConfigYn=:useConfig WHERE d.ad.adId IN (SELECT a.adId FROM Ad a WHERE a.item.itemId IN(:itemIds))")
 	void updateUseConfig(List<Long> itemIds, int useConfig);
+
+	@Query("SELECT d FROM DadDet d WHERE d.ad.adId IN (SELECT a.adId FROM Ad a WHERE a.item.itemId=:itemId) AND d.kwd.kwdName LIKE %:keywordName%")
+	List<DadDet> findDadDetInItemLikeKeywordName(long itemId, String keywordName);
 }
 
