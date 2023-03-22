@@ -87,7 +87,7 @@ public class AdService {
 	public void updateAdUseConfigAndDadUseConfig(UpdateAdUseConfigAndDadUseConfigRequestDto updateAdUseConfigAndDadUseConfigRequestDto) {
 		int isOn = updateAdUseConfigAndDadUseConfigRequestDto.isOn() ? 1 : 0;
 		adRepository.updateUseConfig(updateAdUseConfigAndDadUseConfigRequestDto.getItemIds(), isOn);
-		dadDetRepository.updateUseConfig(updateAdUseConfigAndDadUseConfigRequestDto.getItemIds(), isOn);
+		dadDetRepository.updateUseConfigByItemIds(updateAdUseConfigAndDadUseConfigRequestDto.getItemIds(), isOn);
 	}
 
 	/**
