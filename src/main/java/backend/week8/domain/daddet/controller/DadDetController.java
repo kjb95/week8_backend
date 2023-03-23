@@ -9,6 +9,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
+
+@Transactional
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/daddet")

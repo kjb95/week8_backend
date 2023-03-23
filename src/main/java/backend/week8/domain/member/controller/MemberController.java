@@ -4,11 +4,13 @@ import backend.week8.domain.member.dto.response.RoleResponseDto;
 import backend.week8.domain.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@Transactional
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/member")

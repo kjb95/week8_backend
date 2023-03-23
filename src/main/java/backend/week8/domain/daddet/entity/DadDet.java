@@ -33,16 +33,16 @@ public class DadDet {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long dadDetId;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "AD_ID", nullable = false)
 	private Ad ad;
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "KWD_ID", nullable = false)
 	private Kwd kwd;
 	@Column(name = "DAD_CNR_STATUS", nullable = false)
 	@Enumerated(EnumType.STRING)
 	private DadCnrStatus dadCnrStatus;
-	@OneToOne
+	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "CNR_REQ_ID", nullable = false)
 	private CnrReq cnrReq;
 	@Column(name = "DAD_USE_CONFIG_YN", nullable = false)

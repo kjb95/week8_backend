@@ -7,11 +7,13 @@ import backend.week8.domain.item.dto.response.FindItemsResponseDto;
 import backend.week8.domain.item.service.ItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/item")
+@Transactional
 public class ItemController {
     private final ItemService itemService;
 

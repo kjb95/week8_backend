@@ -17,7 +17,7 @@ public class Adv {
     @Id
     @Column(name = "ADV_ID")
     private String advId;
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @MapsId
     @JoinColumn(name = "ADV_ID")
     private Member member;

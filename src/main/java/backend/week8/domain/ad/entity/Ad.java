@@ -7,7 +7,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.mapping.ToOne;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -34,10 +33,10 @@ public class Ad {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long adId;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "AGROUP_ID", nullable = false)
 	private AGroup agroup;
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ITEM_ID", nullable = false)
 	private Item item;
 	@Column(name = "AD_USE_CONFIG_YN", nullable = false)
@@ -46,7 +45,7 @@ public class Ad {
 	private LocalDateTime regTime;
 	@Column(name = "AD_ACT_YN", nullable = false)
 	private int adActYn;
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ADV_ID", nullable = false)
 	private Adv adv;
 }

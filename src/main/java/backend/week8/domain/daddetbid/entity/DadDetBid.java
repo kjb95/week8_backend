@@ -23,7 +23,7 @@ public class DadDetBid {
 	@Column(name = "DAD_DET_ID")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long dadDetId;
-	@OneToOne
+	@OneToOne(fetch = FetchType.LAZY)
 	@MapsId
 	@JoinColumn(name = "DAD_DET_ID")
 	private DadDet dadDet;
