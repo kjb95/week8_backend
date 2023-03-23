@@ -21,4 +21,7 @@ public interface AdRepository extends JpaRepository<Ad, Long> {
 	@Modifying(clearAutomatically = true)
 	@Query("UPDATE Ad ad SET ad.adActYn=0 WHERE ad.item.itemId IN :itemIds")
 	void updateActOff(List<Long> itemIds);
+
+	@Query("SELECT COUNT(i) FROM Ad a JOIN a.item i ON i.itemActYn=1 WHERE a.agroup.agroupId=:agroupId AND a.adActYn=1")
+	int countItemsInAdGroup(Long agroupId);
 }

@@ -36,7 +36,7 @@ public class Ad {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "AGROUP_ID", nullable = false)
 	private AGroup agroup;
-	@ManyToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ITEM_ID", nullable = false)
 	private Item item;
 	@Column(name = "AD_USE_CONFIG_YN", nullable = false)

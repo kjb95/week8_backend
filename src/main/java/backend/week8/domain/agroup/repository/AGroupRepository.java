@@ -27,9 +27,12 @@ public interface AGroupRepository extends JpaRepository<AGroup, Long> {
 
 	Optional<AGroup> findByAgroupIdAndAgroupActYn(Long agroupId, int agroupActYn);
 
-	@Query(value = "SELECT new backend.week8.domain.agroup.dto.repository.FindAdGroupsDto(ag.agroupId, ag.agroupName, ad.adUseConfigYn, " +
+	@Query("SELECT new backend.week8.domain.agroup.dto.repository.FindAdGroupsDto(ag.agroupId, ag.agroupName, ag.agroupUseConfigYn, " +
 			"SUM(case when ad.adActYn=1 then 1 end), " +
 			"SUM(case when ad.adActYn=1 AND ad.adUseConfigYn=1 then 1 end)) " +
-			"FROM Ad ad JOIN FETCH ad.agroup ag WHERE ag.agroupName LIKE %:agroupName% AND ag.agroupActYn=1 GROUP BY ag.agroupId", nativeQuery = true)
+			"FROM Ad ad " +
+			"JOIN ad.item i ON i.itemActYn=1 " +
+			"RIGHT JOIN ad.agroup ag " +
+			"WHERE ag.agroupName LIKE %:agroupName% AND ag.agroupActYn=1 GROUP BY ag.agroupId")
 	List<FindAdGroupsDto> findAdGroups(String agroupName);
 }

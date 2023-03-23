@@ -4,10 +4,7 @@ import backend.week8.domain.ad.entity.Ad;
 import backend.week8.domain.ad.repository.AdRepository;
 import backend.week8.domain.item.dto.request.FindItemsInAdGroupRequestDto;
 import backend.week8.domain.item.dto.request.FindItemsRequestDto;
-import backend.week8.domain.item.dto.response.FindItemsInAdGroupResponseDto;
-import backend.week8.domain.item.dto.response.FindItemsResponseDto;
-import backend.week8.domain.item.dto.response.ItemInAdGroupResponseDto;
-import backend.week8.domain.item.dto.response.ItemResponseDto;
+import backend.week8.domain.item.dto.response.*;
 import backend.week8.domain.item.entity.Item;
 import backend.week8.domain.item.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,12 +12,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @RequestMapping("/api/item")
 @RequiredArgsConstructor
 @Service
 public class ItemService {
+	private static final String NOT_FOUND_ITEM = "존재하지 않는 상품";
 	private final ItemRepository itemRepository;
 	private final AdRepository adRepository;
 
@@ -28,7 +27,7 @@ public class ItemService {
 	 * 조건에 따른 상품 조회
 	 */
 	public FindItemsResponseDto findItems(FindItemsRequestDto findItemsRequestDto) {
-		List<ItemResponseDto> items = itemRepository.findByItemNameContainsAndItemNoContainsAndItemActYn(findItemsRequestDto.getItemName(), findItemsRequestDto.getItemNo(), 1)
+		List<ItemResponseDto> items = itemRepository.findByItemNameContainsAndItemNoContains(findItemsRequestDto.getItemName(), findItemsRequestDto.getItemNo())
 				.stream()
 				.map((item) -> new ItemResponseDto(item.getItemId(), item.getItemNo(), item.getItemName(), item.getAdultYn(), item.getItemOrgCost(), item.getItemActYn()))
 				.collect(Collectors.toList());
@@ -50,5 +49,14 @@ public class ItemService {
 		Item item = ad.getItem();
 		String isOnAdUseConfig = ad.getAdUseConfigYn() == 1 ? "ON" : "OFF";
 		return new ItemInAdGroupResponseDto(item.getItemId(), item.getItemNo(), item.getItemName(), isOnAdUseConfig);
+	}
+
+	/**
+	 * 상품 한개 조회
+	 */
+	public FindItemResponseDto findItem(Long itemId) {
+		Item item = itemRepository.findById(itemId)
+				.orElseThrow(() -> new NoSuchElementException(NOT_FOUND_ITEM));
+		return new FindItemResponseDto(item.getItemNo(), item.getItemName(), item.getAdultYn() == 1, item.getItemOrgCost());
 	}
 }

@@ -1,5 +1,6 @@
 package backend.week8.domain.item.controller;
 
+import backend.week8.domain.item.dto.response.FindItemResponseDto;
 import backend.week8.domain.item.dto.request.FindItemsInAdGroupRequestDto;
 import backend.week8.domain.item.dto.response.FindItemsInAdGroupResponseDto;
 import backend.week8.domain.item.dto.request.FindItemsRequestDto;
@@ -35,5 +36,15 @@ public class ItemController {
         FindItemsInAdGroupResponseDto findItemsInAdGroupResponseDto = itemService.findItemsInAdGroup(findItemsInAdGroupRequestDto);
         return ResponseEntity.ok()
                 .body(findItemsInAdGroupResponseDto);
+    }
+
+    /**
+     * 상품 한개 조회
+     */
+    @GetMapping("/{itemId}")
+    public ResponseEntity<FindItemResponseDto> findItem(@PathVariable Long itemId) {
+        FindItemResponseDto findItemResponseDto = itemService.findItem(itemId);
+        return ResponseEntity.ok()
+                .body(findItemResponseDto);
     }
 }

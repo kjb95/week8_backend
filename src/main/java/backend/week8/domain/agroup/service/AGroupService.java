@@ -1,13 +1,16 @@
 package backend.week8.domain.agroup.service;
 
+import backend.week8.domain.ad.repository.AdRepository;
+import backend.week8.domain.agroup.dto.UpdateAdGroupUseConfigRequestDto;
+import backend.week8.domain.agroup.dto.repository.FindAdGroupsDto;
 import backend.week8.domain.agroup.dto.request.FindAdGroupRequestDto;
 import backend.week8.domain.agroup.dto.request.FindAllAdGroupResponseDto;
 import backend.week8.domain.agroup.dto.request.UpdateAdGroupActOffRequestDto;
 import backend.week8.domain.agroup.dto.request.UpdateAdGroupNameRequestDto;
-import backend.week8.domain.agroup.dto.response.*;
-import backend.week8.domain.agroup.dto.repository.FindAdGroupsDto;
-import backend.week8.domain.ad.repository.AdRepository;
-import backend.week8.domain.agroup.dto.*;
+import backend.week8.domain.agroup.dto.response.AdGroupIdAndNameResponseDto;
+import backend.week8.domain.agroup.dto.response.AdGroupResponseDto;
+import backend.week8.domain.agroup.dto.response.FindAdGroupResponseDto;
+import backend.week8.domain.agroup.dto.response.FindAllAdGroupIdAndNameResponseDto;
 import backend.week8.domain.agroup.entity.AGroup;
 import backend.week8.domain.agroup.repository.AGroupRepository;
 import lombok.RequiredArgsConstructor;
@@ -84,7 +87,8 @@ public class AGroupService {
 	public FindAdGroupResponseDto findAdGroup(FindAdGroupRequestDto findAdGroupRequestDto) {
 		AGroup aGroup = aGroupRepository.findByAgroupIdAndAgroupActYn(findAdGroupRequestDto.getAdGroupId(), 1)
 				.orElseThrow(() -> new NoSuchElementException(NOT_FOUND_AD_GROUP_ID));
-		return new FindAdGroupResponseDto(aGroup.getAgroupName(), aGroup.getAgroupUseConfigYn(), aGroup.getRegTime());
+		int agroupItemsCount = adRepository.countItemsInAdGroup(aGroup.getAgroupId());
+		return new FindAdGroupResponseDto(aGroup.getAgroupName(), aGroup.getAgroupUseConfigYn(), agroupItemsCount, aGroup.getRegTime());
 	}
 
 	/**
