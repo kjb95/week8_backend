@@ -15,7 +15,7 @@ public class Kwd {
     public Kwd(String kwdName) {
         this.kwdName = kwdName;
         this.sellPossKwdYn = 1;
-        this.manualCnrKwdYn = 0;
+        this.manualCnrKwdYn = 1;
     }
 
     @Id

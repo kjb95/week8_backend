@@ -1,14 +1,13 @@
 package backend.week8.domain.kwd.controller;
 
+import backend.week8.domain.kwd.dto.request.RegisterKwdRequestDto;
+import backend.week8.domain.kwd.dto.request.UpdateManualCnrKwdYnOff;
 import backend.week8.domain.kwd.dto.response.FindAllKwdResponseDto;
 import backend.week8.domain.kwd.service.KwdService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
@@ -25,5 +24,25 @@ public class KwdController {
 		FindAllKwdResponseDto findAllKwdResponseDto = kwdService.findAllKwd(kwdName);
 		return ResponseEntity.ok()
 				.body(findAllKwdResponseDto);
+	}
+
+	/**
+	 * 키워드 등록
+	 */
+	@PostMapping
+	public ResponseEntity<Void> registerKwd(@RequestBody RegisterKwdRequestDto registerKwdRequestDto) {
+		kwdService.registerKwd(registerKwdRequestDto.getKwdName());
+		return ResponseEntity.ok()
+				.build();
+	}
+
+	/**
+	 * 수동 검수 키워드 여부 끄기
+	 */
+	@PutMapping("/manualCnrKwdYnOff")
+	public ResponseEntity<Void> updateManualCnrKwdYnOff(@RequestBody UpdateManualCnrKwdYnOff updateManualCnrKwdYnOff) {
+		kwdService.updateManualCnrKwdYnOff(updateManualCnrKwdYnOff.getKwdId());
+		return ResponseEntity.ok()
+				.build();
 	}
 }

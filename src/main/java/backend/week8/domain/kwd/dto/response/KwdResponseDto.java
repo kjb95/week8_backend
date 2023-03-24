@@ -8,6 +8,6 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class KwdResponseDto {
-	private Long kwdId;
+	private Long key;
 	private String kwdName;
 }
