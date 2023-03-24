@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 
 @AllArgsConstructor
 public enum Role {
-    ROLE_ADV("ROLE_ADV"), ROLE_ADMIN("ROLE_ADMIN,ROLE_ADV");
+    ROLE_ADV("ROLE_ADV"), ROLE_ADMIN("ROLE_ADMIN");
 
     private String role;
 

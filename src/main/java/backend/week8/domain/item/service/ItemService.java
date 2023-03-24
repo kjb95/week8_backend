@@ -9,15 +9,13 @@ import backend.week8.domain.item.entity.Item;
 import backend.week8.domain.item.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
-@RequestMapping("/api/item")
-@RequiredArgsConstructor
 @Service
+@RequiredArgsConstructor
 public class ItemService {
 	private static final String NOT_FOUND_ITEM = "존재하지 않는 상품";
 	private final ItemRepository itemRepository;
