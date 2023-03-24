@@ -2,7 +2,7 @@ package backend.week8.domain.agroup.service;
 
 import backend.week8.domain.ad.repository.AdRepository;
 import backend.week8.domain.agroup.dto.UpdateAdGroupUseConfigRequestDto;
-import backend.week8.domain.agroup.dto.repository.FindAdGroupsDto;
+import backend.week8.domain.agroup.dto.response.FindAdGroupsResponseDto;
 import backend.week8.domain.agroup.dto.request.FindAdGroupRequestDto;
 import backend.week8.domain.agroup.dto.request.FindAllAdGroupResponseDto;
 import backend.week8.domain.agroup.dto.request.UpdateAdGroupActOffRequestDto;
@@ -43,14 +43,14 @@ public class AGroupService {
 	 * 조건에 따른 그룹 검색
 	 */
 	public FindAllAdGroupResponseDto findAllAdGroup(String groupNameCondition) {
-		List<FindAdGroupsDto> findAdGroupsDtos = aGroupRepository.findAdGroups(groupNameCondition);
-		List<AdGroupResponseDto> adGroups = findAdGroupsDtos.stream()
+		List<FindAdGroupsResponseDto> findAdGroupsResponseDtos = aGroupRepository.findAdGroups(groupNameCondition);
+		List<AdGroupResponseDto> adGroups = findAdGroupsResponseDtos.stream()
 				.map(group -> createAGroupDto(group))
 				.collect(Collectors.toList());
 		return new FindAllAdGroupResponseDto(adGroups);
 	}
 
-	private AdGroupResponseDto createAGroupDto(FindAdGroupsDto group) {
+	private AdGroupResponseDto createAGroupDto(FindAdGroupsResponseDto group) {
 		String isGroupOn = group.getAgroupUseConfigYn() == 1 ? "ON" : "OFF";
 		String itemCountLiveAndAll = group.getCountAdUseConfig() + " / " + group.getCountAdAct();
 		return new AdGroupResponseDto(group.getKey(), group.getAgroupName(), isGroupOn, itemCountLiveAndAll);

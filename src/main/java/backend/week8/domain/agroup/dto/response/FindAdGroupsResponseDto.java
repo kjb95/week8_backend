@@ -1,12 +1,12 @@
-package backend.week8.domain.agroup.dto.repository;
+package backend.week8.domain.agroup.dto.response;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class FindAdGroupsDto {
-	public FindAdGroupsDto(Long key, String agroupName, int agroupUseConfigYn, Long countAdAct, Long countAdUseConfig) {
+public class FindAdGroupsResponseDto {
+	public FindAdGroupsResponseDto(Long key, String agroupName, int agroupUseConfigYn, Long countAdAct, Long countAdUseConfig) {
 		this.key = key;
 		this.agroupName = agroupName;
 		this.agroupUseConfigYn = agroupUseConfigYn;

@@ -1,4 +1,4 @@
-package backend.week8.domain.daddet.dto.response;
+package backend.week8.domain.dadDet.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

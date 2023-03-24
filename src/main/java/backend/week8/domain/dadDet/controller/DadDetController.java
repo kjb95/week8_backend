@@ -1,10 +1,10 @@
-package backend.week8.domain.daddet.controller;
+package backend.week8.domain.dadDet.controller;
 
-import backend.week8.domain.daddet.dto.request.FindKeywordsInItemRequestDto;
-import backend.week8.domain.daddet.dto.request.UpdateDadDetActOffRequestDto;
-import backend.week8.domain.daddet.dto.request.UpdateDadDetUseConfigRequestDto;
-import backend.week8.domain.daddet.dto.response.FindKeywordsInItemResponseDto;
-import backend.week8.domain.daddet.service.DadDetService;
+import backend.week8.domain.dadDet.dto.request.FindKeywordsInItemRequestDto;
+import backend.week8.domain.dadDet.dto.request.UpdateDadDetActOffRequestDto;
+import backend.week8.domain.dadDet.dto.request.UpdateDadDetUseConfigRequestDto;
+import backend.week8.domain.dadDet.dto.response.FindKeywordsInItemResponseDto;
+import backend.week8.domain.dadDet.service.DadDetService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

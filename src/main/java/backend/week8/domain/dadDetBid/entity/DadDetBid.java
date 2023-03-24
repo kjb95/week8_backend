@@ -1,6 +1,6 @@
-package backend.week8.domain.daddetbid.entity;
+package backend.week8.domain.dadDetBid.entity;
 
-import backend.week8.domain.daddet.entity.DadDet;
+import backend.week8.domain.dadDet.entity.DadDet;
 import lombok.*;
 
 import javax.persistence.*;

@@ -1,8 +1,8 @@
-package backend.week8.domain.daddet.entity;
+package backend.week8.domain.dadDet.entity;
 
 import backend.week8.domain.ad.entity.Ad;
 import backend.week8.domain.cnrReq.entity.CnrReq;
-import backend.week8.domain.daddet.entity.enums.DadCnrStatus;
+import backend.week8.domain.dadDet.entity.enums.DadCnrStatus;
 import backend.week8.domain.kwd.entity.Kwd;
 import lombok.*;
 

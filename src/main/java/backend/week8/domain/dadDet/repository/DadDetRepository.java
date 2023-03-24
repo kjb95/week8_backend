@@ -1,6 +1,6 @@
-package backend.week8.domain.daddet.repository;
+package backend.week8.domain.dadDet.repository;
 
-import backend.week8.domain.daddet.entity.DadDet;
+import backend.week8.domain.dadDet.entity.DadDet;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

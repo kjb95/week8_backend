@@ -1,4 +1,4 @@
-package backend.week8.domain.daddet.dto.request;
+package backend.week8.domain.dadDet.dto.request;
 
 import lombok.Getter;
 import lombok.Setter;
