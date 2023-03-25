@@ -8,10 +8,8 @@ import javax.persistence.*;
 @Table(name = "DAD_DET_BID")
 @Entity
 @Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class DadDetBid {
 
 	public DadDetBid(DadDet dadDet, int bidCost) {

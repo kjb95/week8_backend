@@ -31,7 +31,7 @@ public class ItemController {
     /**
      * 조건(상품 명, 상품 번호)에 따라 한 광고 그룹에 속한 상품들 조회
      */
-    @PostMapping("/in-ad-group/search")
+    @PostMapping("/inAdGroup/search")
     public ResponseEntity<FindItemsInAdGroupResponseDto> findItemsInAdGroup(@RequestBody FindItemsInAdGroupRequestDto findItemsInAdGroupRequestDto) {
         FindItemsInAdGroupResponseDto findItemsInAdGroupResponseDto = itemService.findItemsInAdGroup(findItemsInAdGroupRequestDto);
         return ResponseEntity.ok()

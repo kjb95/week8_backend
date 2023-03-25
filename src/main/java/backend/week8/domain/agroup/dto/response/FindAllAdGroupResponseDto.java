@@ -4,10 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class AdGroupIdAndNameResponseDto {
-	private Long aGroupId;
-	private String aGroupName;
+public class FindAllAdGroupResponseDto {
+	private List<AdGroupResponseDto> agroups;
 }

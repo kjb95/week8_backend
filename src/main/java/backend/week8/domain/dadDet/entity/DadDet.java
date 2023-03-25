@@ -12,7 +12,6 @@ import java.time.LocalDateTime;
 @Table(name = "DAD_DET")
 @Entity
 @Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -51,4 +50,8 @@ public class DadDet {
 	private int dadActYn;
 	@Column(name = "REG_TIME", nullable = false)
 	private LocalDateTime regTime;
+
+	public void updateDadCnrStatus(DadCnrStatus dadCnrStatus) {
+		this.dadCnrStatus = dadCnrStatus;
+	}
 }

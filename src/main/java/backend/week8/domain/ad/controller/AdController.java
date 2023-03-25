@@ -29,7 +29,7 @@ public class AdController {
 	/**
 	 * 광고 사용 설정 여부, 직접광고 사용 설정 여부 변경
 	 */
-	@PutMapping("/use-config")
+	@PutMapping("/useConfig")
 	public ResponseEntity<Void> updateAdUseConfigAndDadUseConfig(@RequestBody UpdateAdUseConfigAndDadUseConfigRequestDto updateAdUseConfigAndDadUseConfigRequestDto) {
 		adService.updateAdUseConfigAndDadUseConfig(updateAdUseConfigAndDadUseConfigRequestDto);
 		return ResponseEntity.ok()
@@ -39,7 +39,7 @@ public class AdController {
 	/**
 	 * 광고 활성 여부 끄기
 	 */
-	@PutMapping("/act-off")
+	@PutMapping("/actOff")
 	public ResponseEntity<Void> updateAdActOff(@RequestBody UpdateAdActOffRequestDto updateAdActOffRequestDto) {
 		adService.updateAdActOff(updateAdActOffRequestDto);
 		return ResponseEntity.ok()

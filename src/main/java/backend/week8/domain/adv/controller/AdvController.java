@@ -29,7 +29,7 @@ public class AdvController {
 	/**
 	 * 일일 허용 예산 설정 변경
 	 */
-	@PostMapping("/day-limit-budget")
+	@PostMapping("/dayLimitBudget")
 	public ResponseEntity<Void> updateDayLimitBudget(@RequestBody UpdateDayLimitBudgetRequestDto updateDayLimitBudgetRequestDto) {
 		advService.updateDayLimitBudget(updateDayLimitBudgetRequestDto);
 		return ResponseEntity.ok()
@@ -39,7 +39,7 @@ public class AdvController {
 	/**
 	 * 광고주의 광고 진행 활성 여부 변경
 	 */
-	@PostMapping("/ad-ing-act-yn")
+	@PostMapping("/adIngActYn")
 	public ResponseEntity<Void> updateAdIngAct(@RequestBody UpdateAdIngActRequestDto updateAdIngActRequestDto) {
 		advService.updateAdIngAct(updateAdIngActRequestDto);
 		return ResponseEntity.ok()

@@ -40,12 +40,11 @@ public class KwdService {
 			kwdRepository.save(new Kwd(kwdName));
 			return;
 		}
-		Kwd kwd = kwdOptional.get();
+		Kwd kwd = kwdOptional.orElseThrow(() -> new NoSuchElementException(NOT_FOUND_KWD));
 		if (kwd.getManualCnrKwdYn() == 1) {
 			throw new IllegalArgumentException(DUPLICATED_CHECK_KWD);
 		}
-		kwd.setManualCnrKwdYn(1);
-		kwdRepository.save(kwd);
+		kwdRepository.save(new Kwd(kwd.getKwdId(), kwd.getKwdName(), kwd.getSellPossKwdYn(), 1));
 	}
 
 	/**
@@ -54,7 +53,6 @@ public class KwdService {
 	public void updateManualCnrKwdYnOff(Long kwdId) {
 		Kwd kwd = kwdRepository.findById(kwdId)
 				.orElseThrow(() -> new NoSuchElementException(NOT_FOUND_KWD));
-		kwd.setManualCnrKwdYn(0);
-		kwdRepository.save(kwd);
+		kwdRepository.save(new Kwd(kwd.getKwdId(), kwd.getKwdName(), kwd.getSellPossKwdYn(), 0));
 	}
 }

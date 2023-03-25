@@ -1,8 +1,8 @@
 package backend.week8.domain.adv.service;
 
-import backend.week8.domain.adv.dto.response.FindAdvResponseDto;
 import backend.week8.domain.adv.dto.request.UpdateAdIngActRequestDto;
 import backend.week8.domain.adv.dto.request.UpdateDayLimitBudgetRequestDto;
+import backend.week8.domain.adv.dto.response.FindAdvResponseDto;
 import backend.week8.domain.adv.entity.Adv;
 import backend.week8.domain.adv.repository.AdvRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +18,9 @@ public class AdvService {
 	private static final String NOT_FOUND_ADV = "존재하지 않는 광고주 아이디";
 	private final AdvRepository advRepository;
 
+	/**
+	 * 광고주 조회
+	 */
 	public FindAdvResponseDto findAdv(String advId) {
 		Adv adv = advRepository.findById(advId)
 				.orElseThrow(() -> new NoSuchElementException(NOT_FOUND_ADV));
@@ -29,17 +32,21 @@ public class AdvService {
 		return findAdvResponseDto;
 	}
 
+	/**
+	 * 일일 허용 예산 설정 변경
+	 */
 	public void updateDayLimitBudget(UpdateDayLimitBudgetRequestDto updateDayLimitBudgetRequestDto) {
 		Adv adv = advRepository.findById(updateDayLimitBudgetRequestDto.getAdvId())
 				.orElseThrow(() -> new NoSuchElementException(NOT_FOUND_ADV));
-		adv.setDayLimitBudget(updateDayLimitBudgetRequestDto.getDayLimitBudget());
-		advRepository.save(adv);
+		advRepository.save(new Adv(adv.getAdvId(), adv.getMember(), adv.getAdIngActYn(), adv.getBalance(), adv.getEventMoney(), updateDayLimitBudgetRequestDto.getDayLimitBudget()));
 	}
 
+	/**
+	 * 광고주의 광고 진행 활성 여부 변경
+	 */
 	public void updateAdIngAct(UpdateAdIngActRequestDto updateAdIngActRequestDto) {
 		Adv adv = advRepository.findById(updateAdIngActRequestDto.getAdvId())
 				.orElseThrow(() -> new NoSuchElementException(NOT_FOUND_ADV));
-		adv.setAdIngActYn(updateAdIngActRequestDto.isOn() ? 1 : 0);
-		advRepository.save(adv);
+		advRepository.save(new Adv(adv.getAdvId(), adv.getMember(), updateAdIngActRequestDto.isOn() ? 1 : 0, adv.getBalance(), adv.getEventMoney(), adv.getDayLimitBudget()));
 	}
 }

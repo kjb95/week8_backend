@@ -14,7 +14,6 @@ import java.time.LocalDateTime;
 @Table(name = "CNR_REQ")
 @Entity
 @Getter
-@Setter
 @AllArgsConstructor
 @Builder
 public class CnrReq {
@@ -24,10 +23,7 @@ public class CnrReq {
 		cnrIngStatus = CnrIngStatus.REQ;
 		cnrInputDiv = CnrInputDiv.INPUT_CNR;
 		cnrReqTime = LocalDateTime.now();
-		cnrProcTime = LocalDateTime.now();
 		cnrCompleteYn = 0;
-		cnrFailCause = null;
-		cnrFailComt = null;
 	}
 
 	@Id
@@ -59,5 +55,14 @@ public class CnrReq {
 		this.cnrIngStatus = cnrIngStatus ? CnrIngStatus.APPROVAL : CnrIngStatus.REJECT;
 		cnrProcTime = LocalDateTime.now();
 		cnrCompleteYn = 1;
+	}
+
+	public void updateDadDetId(Long dadDetId) {
+		this.dadDetId = dadDetId;
+	}
+
+	public void updateCnrFail(CnrFailCause cnrFailCause, String cnrFailComt) {
+		this.cnrFailCause = cnrFailCause;
+		this.cnrFailComt = cnrFailComt;
 	}
 }

@@ -24,11 +24,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 @RequiredArgsConstructor
 public class AdService {
 
+	private static final String NOT_FOUND_ITEM = "존재하지 않는 상품 아이디";
+	private static final String NOT_FOUND_ADV = "존재하지 않는 광고주 아이디";
 	private static final String NUMBER_REGEX = "-?\\d+(\\.\\d+)?";
 	private final AdRepository adRepository;
 	private final ItemRepository itemRepository;
@@ -59,11 +62,10 @@ public class AdService {
 
 	private Ad registerAd(AGroup aGroup, long itemId, String advId) {
 		Item item = itemRepository.findById(itemId)
-				.get();
+				.orElseThrow(() -> new NoSuchElementException(NOT_FOUND_ITEM));
 		Adv adv = advRepository.findById(advId)
-				.get();
-		Ad ad = new Ad(aGroup, item, adv);
-		return adRepository.save(ad);
+				.orElseThrow(() -> new NoSuchElementException(NOT_FOUND_ADV));
+		return adRepository.save(new Ad(aGroup, item, adv));
 	}
 
 	private void registerDirectAdDetails(Ad ad, List<RegisterAdKeywordRequestDto> keywordList) {
@@ -77,8 +79,7 @@ public class AdService {
 		kwd = kwdRepository.save(kwd);
 		DadDet dadDet = new DadDet(ad, kwd, cnrReq);
 		dadDetBidRepository.save(new DadDetBid(dadDet, keyword.getBid()));
-		cnrReq.setDadDetId(dadDet.getDadDetId());
-		cnrReqRepository.save(cnrReq);
+		cnrReq.updateDadDetId(dadDet.getDadDetId());
 	}
 
 	/**

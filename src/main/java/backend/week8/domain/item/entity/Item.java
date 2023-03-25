@@ -7,10 +7,8 @@ import javax.persistence.*;
 @Table(name = "ITEM")
 @Entity
 @Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class Item {
     @Id
     @Column(name = "ITEM_ID")

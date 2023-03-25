@@ -5,6 +5,7 @@ import backend.week8.domain.cnrReq.dto.response.CnrFailCauseResponseDto;
 import backend.week8.domain.cnrReq.dto.response.FindAllCnrFailCauseResponseDto;
 import backend.week8.domain.cnrReq.entity.CnrReq;
 import backend.week8.domain.cnrReq.entity.enums.CnrFailCause;
+import backend.week8.domain.cnrReq.repository.CnrReqRepository;
 import backend.week8.domain.dadDet.dto.response.AdCheckListResponseDto;
 import backend.week8.domain.dadDet.dto.response.FindAllAdCheckListResponseDto;
 import backend.week8.domain.dadDet.entity.DadDet;
@@ -23,6 +24,7 @@ import java.util.stream.Collectors;
 public class CnrReqService {
 	private static final String NOT_FOUND_DAD_DET = "존재하지 않는 직접광고 상세 아이디";
 	private final DadDetRepository dadDetRepository;
+	private final CnrReqRepository cnrReqRepository;
 
 	/**
 	 * 검수 진행 상태, 검수 처리 시간, 검수 완료 여부, 직접광고 검수 상태, 검수 실패 사유, 검수 실패 코멘트 변경
@@ -33,12 +35,11 @@ public class CnrReqService {
 		CnrReq cnrReq = dadDet.getCnrReq();
 		cnrReq.setCnrIngStatus(updateCheckProcessRequestDto.isCnrIngStatus());
 		if (updateCheckProcessRequestDto.isCnrIngStatus()) {
-			dadDet.setDadCnrStatus(DadCnrStatus.APPROVAL);
+			dadDet.updateDadCnrStatus(DadCnrStatus.APPROVAL);
 			return;
 		}
-		dadDet.setDadCnrStatus(DadCnrStatus.REJECT);
-		cnrReq.setCnrFailCause(CnrFailCause.valueOf(updateCheckProcessRequestDto.getSelectedCnrFailCause()));
-		cnrReq.setCnrFailComt(updateCheckProcessRequestDto.getCnrFailComt());
+		dadDet.updateDadCnrStatus(DadCnrStatus.REJECT);
+		cnrReq.updateCnrFail(CnrFailCause.valueOf(updateCheckProcessRequestDto.getSelectedCnrFailCause()), updateCheckProcessRequestDto.getCnrFailComt());
 	}
 
 	/**

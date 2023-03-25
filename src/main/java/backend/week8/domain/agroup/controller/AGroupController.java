@@ -6,8 +6,8 @@ import backend.week8.domain.agroup.dto.request.RegisterAdGroupRequestDto;
 import backend.week8.domain.agroup.dto.request.UpdateAdGroupActOffRequestDto;
 import backend.week8.domain.agroup.dto.request.UpdateAdGroupNameRequestDto;
 import backend.week8.domain.agroup.dto.response.FindAdGroupResponseDto;
-import backend.week8.domain.agroup.dto.response.FindAllAdGroupIdAndNameResponseDto;
-import backend.week8.domain.agroup.dto.request.FindAllAdGroupResponseDto;
+import backend.week8.domain.agroup.dto.response.FindAllAdGroupResponseDto;
+import backend.week8.domain.agroup.dto.response.FindAllAdGroupByAdGroupNameResponseDto;
 import backend.week8.domain.agroup.service.AGroupService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -24,21 +24,21 @@ public class AGroupController {
 	/**
 	 * 모든 광고 그룹의 아이디와 이름만 조회
 	 */
-	@GetMapping("/all-id-name")
-	public ResponseEntity<FindAllAdGroupIdAndNameResponseDto> findAllAdGroupIdAndName() {
-		FindAllAdGroupIdAndNameResponseDto findAllAdGroupIdAndNameResponseDto = aGroupService.findAllAdGroupIdAndName();
+	@GetMapping("/all")
+	public ResponseEntity<FindAllAdGroupResponseDto> findAllAdGroup() {
+		FindAllAdGroupResponseDto findAllAdGroupResponseDto = aGroupService.findAllAdGroup();
 		return ResponseEntity.ok()
-				.body(findAllAdGroupIdAndNameResponseDto);
+				.body(findAllAdGroupResponseDto);
 	}
 
 	/**
 	 * 조건에 따른 광고 그룹 검색
 	 */
-	@GetMapping("/all")
-	public ResponseEntity<FindAllAdGroupResponseDto> findAllAdGroup(@RequestParam String groupName) {
-		FindAllAdGroupResponseDto findAllAdGroupResponseDto = aGroupService.findAllAdGroup(groupName);
+	@GetMapping("/all/condition")
+	public ResponseEntity<FindAllAdGroupByAdGroupNameResponseDto> findAllAdGroupsByAdGroupName(@RequestParam String groupName) {
+		FindAllAdGroupByAdGroupNameResponseDto findAllAdGroupByAdGroupNameResponseDto = aGroupService.findAllAdGroupsByAdGroupName(groupName);
 		return ResponseEntity.ok()
-				.body(findAllAdGroupResponseDto);
+				.body(findAllAdGroupByAdGroupNameResponseDto);
 	}
 
 	/**
@@ -55,7 +55,7 @@ public class AGroupController {
 	/**
 	 * 광고그룹 사용 설정 변경
 	 */
-	@PutMapping("/use-config")
+	@PutMapping("/useConfig")
 	public ResponseEntity<Void> updateAdGroupUseConfig(@RequestBody UpdateAdGroupUseConfigRequestDto updateAdGroupUseConfigRequestDto) {
 		aGroupService.updateAdGroupUseConfig(updateAdGroupUseConfigRequestDto);
 		return ResponseEntity.ok()
@@ -75,7 +75,7 @@ public class AGroupController {
 	/**
 	 * 광고 그룹 활성 여부 끄기
 	 */
-	@PutMapping("/act-off")
+	@PutMapping("/actOff")
 	public ResponseEntity<Void> updateAdGroupActOff(@RequestBody UpdateAdGroupActOffRequestDto updateAdGroupActOffRequestDto) {
 		aGroupService.updateAdGroupActOff(updateAdGroupActOffRequestDto);
 		return ResponseEntity.ok()
@@ -85,7 +85,7 @@ public class AGroupController {
 	/**
 	 * 광고 그룹명 변경
 	 */
-	@PutMapping("/ad-group-name")
+	@PutMapping("/adGroupName")
 	public ResponseEntity<FindAdGroupResponseDto> updateAdGroupName(@RequestBody UpdateAdGroupNameRequestDto updateAdGroupNameRequestDto) {
 		aGroupService.updateAdGroupName(updateAdGroupNameRequestDto);
 		return ResponseEntity.ok()

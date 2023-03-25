@@ -2,13 +2,13 @@ package backend.week8.domain.agroup.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.List;
 
 @Getter
-@NoArgsConstructor
+@Setter
 @AllArgsConstructor
-public class FindAllAdGroupIdAndNameResponseDto {
-	private List<AdGroupIdAndNameResponseDto> agroups;
+public class FindAllAdGroupByAdGroupNameResponseDto {
+	private List<AdGroupByAdGroupNameResponseDto> agroups;
 }

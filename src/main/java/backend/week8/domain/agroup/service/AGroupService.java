@@ -2,15 +2,10 @@ package backend.week8.domain.agroup.service;
 
 import backend.week8.domain.ad.repository.AdRepository;
 import backend.week8.domain.agroup.dto.UpdateAdGroupUseConfigRequestDto;
-import backend.week8.domain.agroup.dto.response.FindAdGroupsResponseDto;
 import backend.week8.domain.agroup.dto.request.FindAdGroupRequestDto;
-import backend.week8.domain.agroup.dto.request.FindAllAdGroupResponseDto;
 import backend.week8.domain.agroup.dto.request.UpdateAdGroupActOffRequestDto;
 import backend.week8.domain.agroup.dto.request.UpdateAdGroupNameRequestDto;
-import backend.week8.domain.agroup.dto.response.AdGroupIdAndNameResponseDto;
-import backend.week8.domain.agroup.dto.response.AdGroupResponseDto;
-import backend.week8.domain.agroup.dto.response.FindAdGroupResponseDto;
-import backend.week8.domain.agroup.dto.response.FindAllAdGroupIdAndNameResponseDto;
+import backend.week8.domain.agroup.dto.response.*;
 import backend.week8.domain.agroup.entity.AGroup;
 import backend.week8.domain.agroup.repository.AGroupRepository;
 import lombok.RequiredArgsConstructor;
@@ -31,29 +26,29 @@ public class AGroupService {
 	/**
 	 * 모든 광고 그룹의 아이디와 이름만 조회
 	 */
-	public FindAllAdGroupIdAndNameResponseDto findAllAdGroupIdAndName() {
-		List<AdGroupIdAndNameResponseDto> aGroups = aGroupRepository.findAllByAgroupActYn(1)
+	public FindAllAdGroupResponseDto findAllAdGroup() {
+		List<AdGroupResponseDto> aGroups = aGroupRepository.findAllByAgroupActYn(1)
 				.stream()
-				.map(aGroup -> new AdGroupIdAndNameResponseDto(aGroup.getAgroupId(), aGroup.getAgroupName()))
+				.map(aGroup -> new AdGroupResponseDto(aGroup.getAgroupId(), aGroup.getAgroupName()))
 				.collect(Collectors.toList());
-		return new FindAllAdGroupIdAndNameResponseDto(aGroups);
+		return new FindAllAdGroupResponseDto(aGroups);
 	}
 
 	/**
 	 * 조건에 따른 그룹 검색
 	 */
-	public FindAllAdGroupResponseDto findAllAdGroup(String groupNameCondition) {
+	public FindAllAdGroupByAdGroupNameResponseDto findAllAdGroupsByAdGroupName(String groupNameCondition) {
 		List<FindAdGroupsResponseDto> findAdGroupsResponseDtos = aGroupRepository.findAdGroups(groupNameCondition);
-		List<AdGroupResponseDto> adGroups = findAdGroupsResponseDtos.stream()
+		List<AdGroupByAdGroupNameResponseDto> adGroups = findAdGroupsResponseDtos.stream()
 				.map(group -> createAGroupDto(group))
 				.collect(Collectors.toList());
-		return new FindAllAdGroupResponseDto(adGroups);
+		return new FindAllAdGroupByAdGroupNameResponseDto(adGroups);
 	}
 
-	private AdGroupResponseDto createAGroupDto(FindAdGroupsResponseDto group) {
+	private AdGroupByAdGroupNameResponseDto createAGroupDto(FindAdGroupsResponseDto group) {
 		String isGroupOn = group.getAgroupUseConfigYn() == 1 ? "ON" : "OFF";
 		String itemCountLiveAndAll = group.getCountAdUseConfig() + " / " + group.getCountAdAct();
-		return new AdGroupResponseDto(group.getKey(), group.getAgroupName(), isGroupOn, itemCountLiveAndAll);
+		return new AdGroupByAdGroupNameResponseDto(group.getKey(), group.getAgroupName(), isGroupOn, itemCountLiveAndAll);
 	}
 
 	/**
@@ -101,7 +96,6 @@ public class AGroupService {
 		}
 		AGroup aGroup = aGroupRepository.findById(updateAdGroupNameRequestDto.getAdGroupId())
 				.orElseThrow(() -> new NoSuchElementException(NOT_FOUND_AD_GROUP_ID));
-		aGroup.setAgroupName(updateAdGroupNameRequestDto.getAdGroupName());
-		aGroupRepository.save(aGroup);
+		aGroupRepository.save(new AGroup(aGroup.getAgroupId(), updateAdGroupNameRequestDto.getAdGroupName(), aGroup.getRegTime(), aGroup.getAgroupActYn(), aGroup.getAgroupUseConfigYn()));
 	}
 }

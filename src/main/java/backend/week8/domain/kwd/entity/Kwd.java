@@ -7,7 +7,6 @@ import javax.persistence.*;
 @Table(name = "KWD")
 @Entity
 @Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Kwd {

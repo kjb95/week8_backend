@@ -31,7 +31,7 @@ public class DadDetController {
 	/**
 	 * 직접광고 사용 설정 여부 변경
 	 */
-	@PutMapping("/use-config")
+	@PutMapping("/useConfig")
 	public ResponseEntity<Void> updateDadDetUseConfig(@RequestBody UpdateDadDetUseConfigRequestDto updateDadDetUseConfigRequestDto) {
 		dadDetService.updateDadDetUseConfig(updateDadDetUseConfigRequestDto);
 		return ResponseEntity.ok()
@@ -41,7 +41,7 @@ public class DadDetController {
 	/**
 	 * 직접광고 활성 여부 끄기
 	 */
-	@PutMapping("/act-off")
+	@PutMapping("/actOff")
 	public ResponseEntity<Void> updateDadDetActOff(@RequestBody UpdateDadDetActOffRequestDto updateDadDetActOffRequestDto) {
 		dadDetService.updateDadDetActOff(updateDadDetActOffRequestDto);
 		return ResponseEntity.ok()
