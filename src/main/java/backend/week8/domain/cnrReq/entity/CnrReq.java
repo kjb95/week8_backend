@@ -1,8 +1,12 @@
 package backend.week8.domain.cnrReq.entity;
 
+import backend.week8.domain.cnrReq.entity.enums.CnrFailCause;
 import backend.week8.domain.cnrReq.entity.enums.CnrIngStatus;
 import backend.week8.domain.cnrReq.entity.enums.CnrInputDiv;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -17,11 +21,11 @@ public class CnrReq {
 
 	public CnrReq() {
 		dadDetId = 0L;
-		cnrIngStatus = CnrIngStatus.READY;
+		cnrIngStatus = CnrIngStatus.REQ;
 		cnrInputDiv = CnrInputDiv.INPUT_CNR;
 		cnrReqTime = LocalDateTime.now();
 		cnrProcTime = LocalDateTime.now();
-		cnrCompleteYn = 1;
+		cnrCompleteYn = 0;
 		cnrFailCause = null;
 		cnrFailComt = null;
 	}
@@ -46,7 +50,14 @@ public class CnrReq {
 	@Column(name = "CNR_COMPLETE_YN", nullable = false)
 	private int cnrCompleteYn;
 	@Column(name = "CNR_FAIL_CAUSE")
-	private String cnrFailCause;
+	@Enumerated(EnumType.STRING)
+	private CnrFailCause cnrFailCause;
 	@Column(name = "CNR_FAIL_COMT")
 	private String cnrFailComt;
+
+	public void setCnrIngStatus(boolean cnrIngStatus) {
+		this.cnrIngStatus = cnrIngStatus ? CnrIngStatus.APPROVAL : CnrIngStatus.REJECT;
+		cnrProcTime = LocalDateTime.now();
+		cnrCompleteYn = 1;
+	}
 }
