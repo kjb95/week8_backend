@@ -3,6 +3,8 @@ package backend.week8.domain.dadDet.service;
 import backend.week8.domain.dadDet.dto.request.FindKeywordsInItemRequestDto;
 import backend.week8.domain.dadDet.dto.request.UpdateDadDetActOffRequestDto;
 import backend.week8.domain.dadDet.dto.request.UpdateDadDetUseConfigRequestDto;
+import backend.week8.domain.dadDet.dto.response.AdStatusResponseDto;
+import backend.week8.domain.dadDet.dto.response.FindAdStatusResponseDto;
 import backend.week8.domain.dadDet.dto.response.FindKeywordsInItemResponseDto;
 import backend.week8.domain.dadDet.dto.response.KeywordInItemResponseDto;
 import backend.week8.domain.dadDet.entity.DadDet;
@@ -48,5 +50,13 @@ public class DadDetService {
 	 */
 	public void updateDadDetActOff(UpdateDadDetActOffRequestDto updateDadDetActOffRequestDto) {
 		dadDetRepository.updateDadDetActOff(updateDadDetActOffRequestDto.getKwdIds());
+	}
+
+	/**
+	 * 광고 현황(직접광고 상세 ID, 상품 명, 키워드 명, 성인 여부) 조회
+	 */
+	public FindAdStatusResponseDto findAdStatus() {
+		List<AdStatusResponseDto> adStatus = dadDetRepository.findAdStatus();
+		return new FindAdStatusResponseDto(adStatus);
 	}
 }

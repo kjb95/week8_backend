@@ -1,6 +1,7 @@
 package backend.week8.domain.dadDet.repository;
 
 import backend.week8.domain.dadDet.dto.response.AdCheckListResponseDto;
+import backend.week8.domain.dadDet.dto.response.AdStatusResponseDto;
 import backend.week8.domain.dadDet.entity.DadDet;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -30,5 +31,10 @@ public interface DadDetRepository extends JpaRepository<DadDet, Long> {
 			"FROM DadDet d JOIN d.ad a JOIN d.kwd k JOIN d.cnrReq c " +
 			"WHERE k.kwdName LIKE %:kwdName% AND c.cnrIngStatus= 'REQ'")
 	List<AdCheckListResponseDto> findAllAdCheckList(String kwdName);
-}
 
+	@Query("SELECT new backend.week8.domain.dadDet.dto.response.AdStatusResponseDto(d.dadDetId, i.itemName, k.kwdName, i.adultYn) " +
+			"FROM DadDet d JOIN d.ad a JOIN a.item i JOIN d.kwd k JOIN a.agroup ag JOIN d.cnrReq c " +
+			"WHERE c.cnrIngStatus='APPROVAL' AND d.dadActYn=1 AND d.dadUseConfigYn=1 AND a.adActYn=1 AND a.adUseConfigYn=1 AND ag.agroupActYn=1 AND ag.agroupUseConfigYn=1 " +
+			"ORDER BY d.dadDetId")
+	List<AdStatusResponseDto> findAdStatus();
+}

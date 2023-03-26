@@ -3,6 +3,7 @@ package backend.week8.domain.dadDet.controller;
 import backend.week8.domain.dadDet.dto.request.FindKeywordsInItemRequestDto;
 import backend.week8.domain.dadDet.dto.request.UpdateDadDetActOffRequestDto;
 import backend.week8.domain.dadDet.dto.request.UpdateDadDetUseConfigRequestDto;
+import backend.week8.domain.dadDet.dto.response.FindAdStatusResponseDto;
 import backend.week8.domain.dadDet.dto.response.FindKeywordsInItemResponseDto;
 import backend.week8.domain.dadDet.service.DadDetService;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +15,7 @@ import javax.transaction.Transactional;
 @Transactional
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/daddet")
+@RequestMapping("/api/dadDet")
 public class DadDetController {
 	private final DadDetService dadDetService;
 
@@ -46,6 +47,16 @@ public class DadDetController {
 		dadDetService.updateDadDetActOff(updateDadDetActOffRequestDto);
 		return ResponseEntity.ok()
 				.build();
+	}
+
+	/**
+	 * 광고 현황(직접광고 상세 ID, 상품 명, 키워드 명, 성인 여부) 조회
+	 */
+	@GetMapping("/adStatus")
+	public ResponseEntity<FindAdStatusResponseDto> findAdStatus() {
+		FindAdStatusResponseDto findAdStatusResponseDto = dadDetService.findAdStatus();
+		return ResponseEntity.ok()
+				.body(findAdStatusResponseDto);
 	}
 
 }

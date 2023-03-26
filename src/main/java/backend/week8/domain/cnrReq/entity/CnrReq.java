@@ -6,7 +6,7 @@ import backend.week8.domain.cnrReq.entity.enums.CnrInputDiv;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -15,15 +15,17 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
 public class CnrReq {
 
-	public CnrReq() {
+	public CnrReq(int manualCnrKwdYn) {
 		dadDetId = 0L;
-		cnrIngStatus = CnrIngStatus.REQ;
+		cnrIngStatus = manualCnrKwdYn == 1 ? CnrIngStatus.REQ : CnrIngStatus.APPROVAL;
 		cnrInputDiv = CnrInputDiv.INPUT_CNR;
 		cnrReqTime = LocalDateTime.now();
-		cnrCompleteYn = 0;
+		cnrProcTime = manualCnrKwdYn == 1 ? null : LocalDateTime.now();
+		cnrCompleteYn = manualCnrKwdYn == 1 ? 0 : 1;
 	}
 
 	@Id

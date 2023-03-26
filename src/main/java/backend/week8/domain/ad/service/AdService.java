@@ -32,6 +32,7 @@ public class AdService {
 
 	private static final String NOT_FOUND_ITEM = "존재하지 않는 상품 아이디";
 	private static final String NOT_FOUND_ADV = "존재하지 않는 광고주 아이디";
+	private static final String UNSELLABLE_KEYWORD = "는(은) 판매가 불가능한 키워드 입니다";
 	private static final String NUMBER_REGEX = "-?\\d+(\\.\\d+)?";
 	private final AdRepository adRepository;
 	private final ItemRepository itemRepository;
@@ -73,9 +74,12 @@ public class AdService {
 	}
 
 	private void registerDirectAdDetails(Ad ad, RegisterAdKeywordRequestDto keyword) {
-		CnrReq cnrReq = cnrReqRepository.save(new CnrReq());
 		Kwd kwd = kwdRepository.findKwdByKwdName(keyword.getKeywordName())
 				.orElseGet(() -> new Kwd(keyword.getKeywordName()));
+		if (kwd.getSellPossKwdYn() == 0) {
+			throw new IllegalArgumentException(kwd.getKwdName() + UNSELLABLE_KEYWORD);
+		}
+		CnrReq cnrReq = cnrReqRepository.save(new CnrReq(kwd.getManualCnrKwdYn()));
 		kwd = kwdRepository.save(kwd);
 		DadDet dadDet = new DadDet(ad, kwd, cnrReq);
 		dadDetBidRepository.save(new DadDetBid(dadDet, keyword.getBid()));

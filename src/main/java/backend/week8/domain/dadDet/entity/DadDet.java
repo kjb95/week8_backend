@@ -20,7 +20,7 @@ public class DadDet {
 	public DadDet(Ad ad, Kwd kwd, CnrReq cnrReq) {
 		this.ad = ad;
 		this.kwd = kwd;
-		this.dadCnrStatus = DadCnrStatus.APPROVAL;
+		this.dadCnrStatus = kwd.getManualCnrKwdYn() == 1 ? DadCnrStatus.REQ : DadCnrStatus.APPROVAL;
 		this.cnrReq = cnrReq;
 		this.dadUseConfigYn = 1;
 		this.dadActYn = 1;
