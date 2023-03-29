@@ -1,4 +1,4 @@
-package backend.week8.domain.taskReq.dto;
+package backend.week8.domain.taskReq.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,6 +9,6 @@ import lombok.Setter;
 @AllArgsConstructor
 public class CreateTaskReqRequestDto {
 	private String memberId;
-	private String jobName;
+	private String taskName;
 	private String taskReqFile;
 }

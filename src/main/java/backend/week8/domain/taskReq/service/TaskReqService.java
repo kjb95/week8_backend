@@ -2,7 +2,10 @@ package backend.week8.domain.taskReq.service;
 
 import backend.week8.domain.member.entity.Member;
 import backend.week8.domain.member.repository.MemberRepository;
-import backend.week8.domain.taskReq.dto.CreateTaskReqRequestDto;
+import backend.week8.domain.taskReq.dto.request.CreateTaskReqRequestDto;
+import backend.week8.domain.taskReq.dto.request.FindTaskReqHistoryResponseDto;
+import backend.week8.domain.taskReq.dto.response.TaskReqResponseDto;
+import backend.week8.domain.taskReq.dto.response.UploadTaskReqFileResponseDto;
 import backend.week8.domain.taskReq.entity.TaskReq;
 import backend.week8.domain.taskReq.repository.TaskReqRepository;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +15,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -29,7 +36,7 @@ public class TaskReqService {
 	public void createTaskReq(CreateTaskReqRequestDto createTaskReqRequestDto) {
 		Member member = memberRepository.findById(createTaskReqRequestDto.getMemberId())
 				.orElseThrow(() -> new NoSuchElementException(NOT_FOUND_MEMBER));
-		TaskReq taskReq = new TaskReq(member, createTaskReqRequestDto.getJobName(), createTaskReqRequestDto.getTaskReqFile());
+		TaskReq taskReq = new TaskReq(member, createTaskReqRequestDto.getTaskName(), createTaskReqRequestDto.getTaskReqFile());
 		taskReqRepository.save(taskReq);
 	}
 
@@ -44,8 +51,38 @@ public class TaskReqService {
 	/**
 	 * 테스크 요청 파일 업로드
 	 */
-	public void uploadTaskReqFile(MultipartFile file) throws IOException {
-		String fullPath = fileDir + file.getOriginalFilename();
+	public UploadTaskReqFileResponseDto uploadTaskReqFile(MultipartFile file) throws IOException {
+		String saveFileName = createSaveFileName(file.getOriginalFilename());
+		String fullPath = fileDir + saveFileName;
 		file.transferTo(new File(fullPath));
+		return new UploadTaskReqFileResponseDto(saveFileName);
+	}
+
+	private String createSaveFileName(String fileName) {
+		String uuid = UUID.randomUUID()
+				.toString();
+		String extension = fileName.split("\\.")[1];
+		return uuid + "." + extension;
+	}
+
+	/**
+	 * 작업 요청 내역 조회
+	 */
+	public FindTaskReqHistoryResponseDto findTaskReqHistory() {
+		List<TaskReqResponseDto> taskReqHistory = taskReqRepository.findAll()
+				.stream()
+				.map(this::createTaskReqResponseDto)
+				.collect(Collectors.toList());
+		return new FindTaskReqHistoryResponseDto(taskReqHistory);
+	}
+
+	private TaskReqResponseDto createTaskReqResponseDto(TaskReq task) {
+		String status = task.getStatus()
+				.getDescription();
+		String registrant = task.getMember()
+				.getMemberId();
+		String regTime = task.getReqTime()
+				.format(DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm"));
+		return new TaskReqResponseDto(task.getId(), task.getName(), status, registrant, regTime, task.getReqFilePath());
 	}
 }

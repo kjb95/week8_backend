@@ -16,12 +16,12 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class TaskReq {
 
-	public TaskReq(Member member, String taskName, String taskReqFilePath) {
+	public TaskReq(Member member, String name, String reqFilePath) {
 		this.member = member;
-		this.taskName = taskName;
-		this.taskReqFilePath = taskReqFilePath;
-		taskStatus = TaskStatus.REQ;
-		taskReqTime = LocalDateTime.now();
+		this.name = name;
+		this.reqFilePath = reqFilePath;
+		status = TaskStatus.REQ;
+		reqTime = LocalDateTime.now();
 	}
 
 	@Id
@@ -33,15 +33,15 @@ public class TaskReq {
 	private Member member;
 	@Enumerated(EnumType.STRING)
 	@Column(name = "TASK_STATUS")
-	private TaskStatus taskStatus;
+	private TaskStatus status;
 	@Column(name = "TASK_NAME")
-	private String taskName;
+	private String name;
 	@Column(name = "TASK_REQ_FILE_PATH")
-	private String taskReqFilePath;
+	private String reqFilePath;
 	@Column(name = "TASK_REQ_TIME")
-	private LocalDateTime taskReqTime;
+	private LocalDateTime reqTime;
 	@Column(name = "TASK_START_TIME")
-	private LocalDateTime taskStartTime;
+	private LocalDateTime startTime;
 	@Column(name = "TASK_END_TIME")
-	private LocalDateTime taskEndTime;
+	private LocalDateTime endTime;
 }
