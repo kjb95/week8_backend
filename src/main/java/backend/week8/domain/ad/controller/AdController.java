@@ -6,10 +6,8 @@ import backend.week8.domain.ad.dto.request.UpdateAdUseConfigAndDadUseConfigReque
 import backend.week8.domain.ad.service.AdService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-@Transactional
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/ad")

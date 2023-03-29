@@ -11,6 +11,7 @@ import backend.week8.domain.taskReq.repository.TaskReqRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -21,6 +22,7 @@ import java.util.NoSuchElementException;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+@Transactional(readOnly = true)
 @Service
 @RequiredArgsConstructor
 public class TaskReqService {
@@ -33,6 +35,7 @@ public class TaskReqService {
 	/**
 	 * 테스크 작업 요청
 	 */
+	@Transactional
 	public void createTaskReq(CreateTaskReqRequestDto createTaskReqRequestDto) {
 		Member member = memberRepository.findById(createTaskReqRequestDto.getMemberId())
 				.orElseThrow(() -> new NoSuchElementException(NOT_FOUND_MEMBER));
@@ -43,6 +46,7 @@ public class TaskReqService {
 	/**
 	 * 테스크 요청 파일 삭제
 	 */
+	@Transactional
 	public void deleteTaskReqFile(String taskReqFile) {
 		File file = new File(fileDir + taskReqFile);
 		file.delete();
@@ -51,6 +55,7 @@ public class TaskReqService {
 	/**
 	 * 테스크 요청 파일 업로드
 	 */
+	@Transactional
 	public UploadTaskReqFileResponseDto uploadTaskReqFile(MultipartFile file) throws IOException {
 		String saveFileName = createSaveFileName(file.getOriginalFilename());
 		String fullPath = fileDir + saveFileName;

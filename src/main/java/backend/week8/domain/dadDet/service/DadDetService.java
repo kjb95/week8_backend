@@ -12,10 +12,12 @@ import backend.week8.domain.dadDet.repository.DadDetRepository;
 import backend.week8.domain.kwd.entity.Kwd;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Transactional(readOnly = true)
 @Service
 @RequiredArgsConstructor
 public class DadDetService {
@@ -41,6 +43,7 @@ public class DadDetService {
 	/**
 	 * 직접광고 사용 설정 여부 변경
 	 */
+	@Transactional
 	public void updateDadDetUseConfig(UpdateDadDetUseConfigRequestDto updateDadDetUseConfigRequestDto) {
 		dadDetRepository.updateUseConfigByKwdIds(updateDadDetUseConfigRequestDto.getKwdIds(), updateDadDetUseConfigRequestDto.isOn() ? 1 : 0);
 	}
@@ -48,6 +51,7 @@ public class DadDetService {
 	/**
 	 * 직접광고 활성 여부 끄기
 	 */
+	@Transactional
 	public void updateDadDetActOff(UpdateDadDetActOffRequestDto updateDadDetActOffRequestDto) {
 		dadDetRepository.updateDadDetActOff(updateDadDetActOffRequestDto.getKwdIds());
 	}

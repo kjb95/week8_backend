@@ -22,10 +22,12 @@ import backend.week8.domain.kwd.entity.Kwd;
 import backend.week8.domain.kwd.repository.KwdRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.NoSuchElementException;
 
+@Transactional(readOnly = true)
 @Service
 @RequiredArgsConstructor
 public class AdService {
@@ -46,6 +48,7 @@ public class AdService {
 	/**
 	 * 광고 등록
 	 */
+	@Transactional
 	public void registerAd(RegisterAdRequestDto registerAdRequestDto) {
 		AGroup aGroup = registerAGroupById(registerAdRequestDto.getAgroupId());
 		Ad ad = registerAd(aGroup, registerAdRequestDto.getItemId(), registerAdRequestDto.getAdvId());
@@ -89,6 +92,7 @@ public class AdService {
 	/**
 	 * 광고 사용 설정 여부, 직접광고 사용 설정 여부 변경
 	 */
+	@Transactional
 	public void updateAdUseConfigAndDadUseConfig(UpdateAdUseConfigAndDadUseConfigRequestDto updateAdUseConfigAndDadUseConfigRequestDto) {
 		int isOn = updateAdUseConfigAndDadUseConfigRequestDto.isOn() ? 1 : 0;
 		adRepository.updateUseConfig(updateAdUseConfigAndDadUseConfigRequestDto.getItemIds(), isOn);
@@ -98,6 +102,7 @@ public class AdService {
 	/**
 	 * 광고 활성 여부 끄기
 	 */
+	@Transactional
 	public void updateAdActOff(UpdateAdActOffRequestDto updateAdActOffRequestDto) {
 		adRepository.updateActOff(updateAdActOffRequestDto.getItemIds());
 	}

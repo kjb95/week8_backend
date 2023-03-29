@@ -13,12 +13,14 @@ import backend.week8.domain.dadDet.entity.enums.DadCnrStatus;
 import backend.week8.domain.dadDet.repository.DadDetRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
+@Transactional(readOnly = true)
 @Service
 @RequiredArgsConstructor
 public class CnrReqService {
@@ -29,6 +31,7 @@ public class CnrReqService {
 	/**
 	 * 검수 진행 상태, 검수 처리 시간, 검수 완료 여부, 직접광고 검수 상태, 검수 실패 사유, 검수 실패 코멘트 변경
 	 */
+	@Transactional
 	public void updateCheckProcess(UpdateCheckProcessRequestDto updateCheckProcessRequestDto) {
 		DadDet dadDet = dadDetRepository.findById(updateCheckProcessRequestDto.getDadDetId())
 				.orElseThrow(() -> new NoSuchElementException(NOT_FOUND_DAD_DET));

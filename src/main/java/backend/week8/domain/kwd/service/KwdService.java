@@ -6,12 +6,13 @@ import backend.week8.domain.kwd.entity.Kwd;
 import backend.week8.domain.kwd.repository.KwdRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
+@Transactional(readOnly = true)
 @Service
 @RequiredArgsConstructor
 public class KwdService {
@@ -34,6 +35,7 @@ public class KwdService {
 	/**
 	 * 키워드 등록
 	 */
+	@Transactional
 	public void registerKwd(String kwdName) {
 		Optional<Kwd> kwdOptional = kwdRepository.findKwdByKwdName(kwdName);
 		if (!kwdOptional.isPresent()) {
@@ -50,6 +52,7 @@ public class KwdService {
 	/**
 	 * 수동 검수 키워드 여부 끄기
 	 */
+	@Transactional
 	public void updateManualCnrKwdYnOff(Long kwdId) {
 		Kwd kwd = kwdRepository.findById(kwdId)
 				.orElseThrow(() -> new NoSuchElementException(NOT_FOUND_KWD));

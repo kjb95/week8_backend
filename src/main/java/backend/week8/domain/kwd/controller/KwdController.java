@@ -6,13 +6,11 @@ import backend.week8.domain.kwd.dto.response.FindAllKwdResponseDto;
 import backend.week8.domain.kwd.service.KwdService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/kwd")
-@Transactional
 public class KwdController {
 	private final KwdService kwdService;
 

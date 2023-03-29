@@ -1,20 +1,18 @@
 package backend.week8.domain.agroup.controller;
 
-import backend.week8.domain.agroup.dto.*;
+import backend.week8.domain.agroup.dto.UpdateAdGroupUseConfigRequestDto;
 import backend.week8.domain.agroup.dto.request.FindAdGroupRequestDto;
 import backend.week8.domain.agroup.dto.request.RegisterAdGroupRequestDto;
 import backend.week8.domain.agroup.dto.request.UpdateAdGroupActOffRequestDto;
 import backend.week8.domain.agroup.dto.request.UpdateAdGroupNameRequestDto;
 import backend.week8.domain.agroup.dto.response.FindAdGroupResponseDto;
-import backend.week8.domain.agroup.dto.response.FindAllAdGroupResponseDto;
 import backend.week8.domain.agroup.dto.response.FindAllAdGroupByAdGroupNameResponseDto;
+import backend.week8.domain.agroup.dto.response.FindAllAdGroupResponseDto;
 import backend.week8.domain.agroup.service.AGroupService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-@Transactional
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/agroup")

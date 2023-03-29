@@ -1,15 +1,13 @@
 package backend.week8.domain.adv.controller;
 
-import backend.week8.domain.adv.dto.response.FindAdvResponseDto;
 import backend.week8.domain.adv.dto.request.UpdateAdIngActRequestDto;
 import backend.week8.domain.adv.dto.request.UpdateDayLimitBudgetRequestDto;
+import backend.week8.domain.adv.dto.response.FindAdvResponseDto;
 import backend.week8.domain.adv.service.AdvService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-@Transactional
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/adv")

@@ -10,11 +10,13 @@ import backend.week8.domain.agroup.entity.AGroup;
 import backend.week8.domain.agroup.repository.AGroupRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
+@Transactional(readOnly = true)
 @Service
 @RequiredArgsConstructor
 public class AGroupService {
@@ -54,6 +56,7 @@ public class AGroupService {
 	/**
 	 * 광고그룹 사용 설정 변경
 	 */
+	@Transactional
 	public void updateAdGroupUseConfig(UpdateAdGroupUseConfigRequestDto updateAdGroupUseConfigRequestDto) {
 		int useConfig = updateAdGroupUseConfigRequestDto.isOn() ? 1 : 0;
 		aGroupRepository.updateUseConfig(updateAdGroupUseConfigRequestDto.getAdGroupIds(), useConfig);
@@ -62,6 +65,7 @@ public class AGroupService {
 	/**
 	 * 광고그룹 등록
 	 */
+	@Transactional
 	public void registerAGroupByName(String agroupName) {
 		if (aGroupRepository.existsByAgroupName(agroupName)) {
 			throw new IllegalArgumentException(DUPLICATED_ADGROUP_NAME);
@@ -72,6 +76,7 @@ public class AGroupService {
 	/**
 	 * 광고 그룹 활성 여부 끄기
 	 */
+	@Transactional
 	public void updateAdGroupActOff(UpdateAdGroupActOffRequestDto updateAdGroupActOffRequestDto) {
 		aGroupRepository.updateActOff(updateAdGroupActOffRequestDto.getAdGroupIds());
 	}
@@ -89,6 +94,7 @@ public class AGroupService {
 	/**
 	 * 광고 그룹명 변경
 	 */
+	@Transactional
 	public void updateAdGroupName(UpdateAdGroupNameRequestDto updateAdGroupNameRequestDto) {
 		boolean isExistAgroupName = aGroupRepository.existsByAgroupName(updateAdGroupNameRequestDto.getAdGroupName());
 		if (isExistAgroupName) {

@@ -6,10 +6,8 @@ import backend.week8.domain.cnrReq.service.CnrReqService;
 import backend.week8.domain.dadDet.dto.response.FindAllAdCheckListResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-@Transactional
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/cnrReq")
