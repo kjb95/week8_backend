@@ -15,10 +15,11 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static backend.week8.common.constant.Constant.NOT_FOUND_USERNAME;
+
 @RequiredArgsConstructor
 @Component
 public class CustomUserDetailsService implements UserDetailsService {
-    private static final String NOT_FOUND_USERNAME = " : 존재하지 않는 username 입니다.";
     private final MemberRepository memberRepository;
 
     /**

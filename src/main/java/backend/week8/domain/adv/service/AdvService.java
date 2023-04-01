@@ -12,12 +12,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.NoSuchElementException;
 
+ import static backend.week8.common.constant.Constant.NOT_FOUND_ADV;
+
 @Transactional(readOnly = true)
 @Service
 @RequiredArgsConstructor
 public class AdvService {
 
-	private static final String NOT_FOUND_ADV = "존재하지 않는 광고주 아이디";
 	private final AdvRepository advRepository;
 
 	/**

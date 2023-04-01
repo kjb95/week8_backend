@@ -16,12 +16,13 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
+import static backend.week8.common.constant.Constant.DUPLICATED_ADGROUP_NAME;
+import static backend.week8.common.constant.Constant.NOT_FOUND_AD_GROUP;
+
 @Transactional(readOnly = true)
 @Service
 @RequiredArgsConstructor
 public class AGroupService {
-	private static final String DUPLICATED_ADGROUP_NAME = "이미 존재하는 광고그룹 이름 입니다";
-	private static final String NOT_FOUND_AD_GROUP_ID = "존재하지 않는 광고그룹 아이디";
 	private final AGroupRepository aGroupRepository;
 	private final AdRepository adRepository;
 
@@ -86,7 +87,7 @@ public class AGroupService {
 	 */
 	public FindAdGroupResponseDto findAdGroup(FindAdGroupRequestDto findAdGroupRequestDto) {
 		AGroup aGroup = aGroupRepository.findByAgroupIdAndAgroupActYn(findAdGroupRequestDto.getAdGroupId(), 1)
-				.orElseThrow(() -> new NoSuchElementException(NOT_FOUND_AD_GROUP_ID));
+				.orElseThrow(() -> new NoSuchElementException(NOT_FOUND_AD_GROUP));
 		int agroupItemsCount = adRepository.countItemsInAdGroup(aGroup.getAgroupId());
 		return new FindAdGroupResponseDto(aGroup.getAgroupName(), aGroup.getAgroupUseConfigYn(), agroupItemsCount, aGroup.getRegTime());
 	}
@@ -101,7 +102,7 @@ public class AGroupService {
 			throw new IllegalArgumentException(DUPLICATED_ADGROUP_NAME);
 		}
 		AGroup aGroup = aGroupRepository.findById(updateAdGroupNameRequestDto.getAdGroupId())
-				.orElseThrow(() -> new NoSuchElementException(NOT_FOUND_AD_GROUP_ID));
+				.orElseThrow(() -> new NoSuchElementException(NOT_FOUND_AD_GROUP));
 		aGroupRepository.save(new AGroup(aGroup.getAgroupId(), updateAdGroupNameRequestDto.getAdGroupName(), aGroup.getRegTime(), aGroup.getAgroupActYn(), aGroup.getAgroupUseConfigYn()));
 	}
 }

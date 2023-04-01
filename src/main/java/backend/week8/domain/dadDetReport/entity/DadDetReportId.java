@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 @Getter
 @Embeddable
@@ -16,8 +15,16 @@ import java.time.LocalDateTime;
 public class DadDetReportId implements Serializable {
 	@Column(name = "ADV_ID")
 	private String advId;
-	@Column(name = "DATE")
-	private LocalDateTime date;
+	@Column(name = "BASE_DATE")
+	private String baseDate;
 	@Column(name = "DAD_DET_ID")
-	private String dadDetId;
+	private Long dadDetId;
+
+	@Override
+	public int hashCode() {
+		int result = advId != null ? advId.hashCode() : 0;
+		result = 31 * result + (baseDate != null ? baseDate.hashCode() : 0);
+		result = 31 * result + (dadDetId != null ? dadDetId.hashCode() : 0);
+		return result;
+	}
 }

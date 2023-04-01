@@ -15,11 +15,13 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
+import static backend.week8.common.constant.Constant.NOT_FOUND_ITEM;
+
 @Transactional(readOnly = true)
 @Service
 @RequiredArgsConstructor
 public class ItemService {
-	private static final String NOT_FOUND_ITEM = "존재하지 않는 상품";
+
 	private final ItemRepository itemRepository;
 	private final AdRepository adRepository;
 

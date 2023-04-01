@@ -4,7 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @Table(name = "DAD_DET_REPORT")
 @Entity
@@ -19,7 +22,7 @@ public class DadDetReport {
 	@Column(name = "CLICKS")
 	private int clicks;
 	@Column(name = "AVERAGE_IMPRESSION_RANK")
-	private int averageImpressionRank;
+	private double averageImpressionRank;
 	@Column(name = "AVERAGE_CLICK_COST")
 	private int averageClickCost;
 	@Column(name = "ADVERTISING_COST")

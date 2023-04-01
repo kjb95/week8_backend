@@ -20,13 +20,13 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
+import static backend.week8.common.constant.Constant.NOT_FOUND_DAD_DET;
+
 @Transactional(readOnly = true)
 @Service
 @RequiredArgsConstructor
 public class CnrReqService {
-	private static final String NOT_FOUND_DAD_DET = "존재하지 않는 직접광고 상세 아이디";
 	private final DadDetRepository dadDetRepository;
-	private final CnrReqRepository cnrReqRepository;
 
 	/**
 	 * 검수 진행 상태, 검수 처리 시간, 검수 완료 여부, 직접광고 검수 상태, 검수 실패 사유, 검수 실패 코멘트 변경

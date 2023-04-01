@@ -27,14 +27,12 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+import static backend.week8.common.constant.Constant.*;
+
 @Transactional(readOnly = true)
 @Service
 @RequiredArgsConstructor
 public class AdService {
-
-	private static final String NOT_FOUND_ITEM = "존재하지 않는 상품 아이디";
-	private static final String NOT_FOUND_ADV = "존재하지 않는 광고주 아이디";
-	private static final String UNSELLABLE_KEYWORD = "는(은) 판매가 불가능한 키워드 입니다";
 	private static final String NUMBER_REGEX = "-?\\d+(\\.\\d+)?";
 	private final AdRepository adRepository;
 	private final ItemRepository itemRepository;

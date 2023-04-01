@@ -22,11 +22,12 @@ import java.util.NoSuchElementException;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import static backend.week8.common.constant.Constant.NOT_FOUND_MEMBER;
+
 @Transactional(readOnly = true)
 @Service
 @RequiredArgsConstructor
 public class TaskReqService {
-	private static final String NOT_FOUND_MEMBER = "존재하지 않는 회원 아이디";
 	private final TaskReqRepository taskReqRepository;
 	private final MemberRepository memberRepository;
 	@Value("${file.dir}")

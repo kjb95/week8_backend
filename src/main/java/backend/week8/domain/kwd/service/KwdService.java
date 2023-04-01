@@ -12,13 +12,14 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import static backend.week8.common.constant.Constant.DUPLICATED_CHECK_KWD;
+import static backend.week8.common.constant.Constant.NOT_FOUND_KWD;
+
 @Transactional(readOnly = true)
 @Service
 @RequiredArgsConstructor
 public class KwdService {
-
-	private static final String DUPLICATED_CHECK_KWD = "이미 등록된 검수 대상 키워드 입니다";
-	private static final String NOT_FOUND_KWD = "존재하지 않는 키워드 아이디";
 	private final KwdRepository kwdRepository;
 
 	/**
