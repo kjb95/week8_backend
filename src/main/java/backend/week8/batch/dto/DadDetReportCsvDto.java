@@ -6,6 +6,7 @@ import lombok.*;
 @AllArgsConstructor
 @Getter
 @Setter
+@Builder
 public class DadDetReportCsvDto {
 	private String baseDate;
 	private Long dadDetId;
@@ -14,4 +15,5 @@ public class DadDetReportCsvDto {
 	private double averageImpressionRank;
 	private int averageClickCost;
 	private int advertisingCost;
+	private String fileName;
 }

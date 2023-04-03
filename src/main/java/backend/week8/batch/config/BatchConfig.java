@@ -16,13 +16,14 @@ import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.batch.core.repository.JobExecutionAlreadyRunningException;
 import org.springframework.batch.core.repository.JobInstanceAlreadyCompleteException;
 import org.springframework.batch.core.repository.JobRestartException;
-import org.springframework.batch.item.file.FlatFileItemReader;
+import org.springframework.batch.item.file.MultiResourceItemReader;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.Scheduled;
 
 import javax.persistence.EntityManagerFactory;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Configuration
@@ -33,7 +34,7 @@ public class BatchConfig {
 	private final TaskReqItemProcessor taskReqItemProcessor;
 	private final EntityManagerFactory entityManagerFactory;
 	private final TaskReqListener taskReqListener;
-	private final FlatFileItemReader flatFileItemReader;
+	private final MultiResourceItemReader multiResourceItemReader;
 	private final TaskReqRepository taskReqRepository;
 	private final JobLauncher jobLauncher;
 
@@ -48,17 +49,17 @@ public class BatchConfig {
 	public Step taskReqStep() {
 		return stepBuilderFactory.get("taskReqStep")
 				.<DadDetReportCsvDto, DadDetReport>chunk(1024)
-				.reader(flatFileItemReader)
+				.reader(multiResourceItemReader)
 				.processor(taskReqItemProcessor)
 				.writer(new CustomJpaItemWriter(entityManagerFactory))
 				.listener(taskReqListener)
 				.build();
 	}
 
-	@Scheduled(fixedDelay = 10000)
+	@Scheduled(fixedDelay = 30000)
 	public void runTaskReqJob() throws JobInstanceAlreadyCompleteException, JobExecutionAlreadyRunningException, JobParametersInvalidException, JobRestartException {
-		TaskReq taskReq = taskReqRepository.findByStatus(TaskStatus.REQ);
-		if (taskReq == null) {
+		List<TaskReq> taskReqs = taskReqRepository.findByStatus(TaskStatus.REQ);
+		if (taskReqs == null || taskReqs.size() == 0) {
 			return;
 		}
 		Map<String, JobParameter> jobParameterMap = new HashMap<>();
