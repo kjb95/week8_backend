@@ -6,7 +6,7 @@ import org.springframework.batch.item.file.FlatFileItemReader;
 import org.springframework.batch.item.file.MultiResourceItemReader;
 import org.springframework.batch.item.file.builder.FlatFileItemReaderBuilder;
 import org.springframework.batch.item.file.builder.MultiResourceItemReaderBuilder;
-import org.springframework.batch.item.file.transform.DelimitedLineTokenizer;
+import org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.Resource;
@@ -19,7 +19,10 @@ public class TaskReqReader {
 		return new FlatFileItemReaderBuilder<DadDetReportCsvDto>().name("taskReqItemReader")
 				.targetType(DadDetReportCsvDto.class)
 				.linesToSkip(1)
-				.lineTokenizer(new DelimitedLineTokenizer())
+				.fieldSetMapper(new BeanWrapperFieldSetMapper<>())
+				.delimited()
+				.delimiter(",")
+				.names("baseDate", "dadDetId", "impressions", "clicks", "averageImpressionRank", "averageClickCost", "advertisingCost")
 				.build();
 	}
 

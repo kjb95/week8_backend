@@ -19,7 +19,6 @@ public class CustomJpaItemWriter<T> extends JpaItemWriter<T> {
 
 	public CustomJpaItemWriter(EntityManagerFactory entityManagerFactory) {
 		this.entityManagerFactory = entityManagerFactory;
-		setUsePersist(true);
 	}
 
 	@Override

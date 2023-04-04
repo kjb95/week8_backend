@@ -37,4 +37,7 @@ public interface DadDetRepository extends JpaRepository<DadDet, Long> {
 			"WHERE c.cnrIngStatus='APPROVAL' AND d.dadActYn=1 AND d.dadUseConfigYn=1 AND a.adActYn=1 AND a.adUseConfigYn=1 AND ag.agroupActYn=1 AND ag.agroupUseConfigYn=1 " +
 			"ORDER BY d.dadDetId")
 	List<AdStatusResponseDto> findAdStatus();
+
+	@Query("SELECT a.adv.advId FROM DadDet d JOIN d.ad a WHERE d.dadDetId=:dadDetId")
+	String findAdvIdByDadDetId(Long dadDetId);
 }

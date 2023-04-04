@@ -1,9 +1,9 @@
 package backend.week8.batch.processor;
 
 import backend.week8.batch.dto.DadDetReportCsvDto;
+import backend.week8.domain.dadDet.repository.DadDetRepository;
 import backend.week8.domain.dadDetReport.entity.DadDetReport;
 import backend.week8.domain.dadDetReport.entity.DadDetReportId;
-import backend.week8.domain.taskReq.entity.TaskReq;
 import backend.week8.domain.taskReq.entity.enus.TaskStatus;
 import backend.week8.domain.taskReq.repository.TaskReqRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,31 +17,24 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.NoSuchElementException;
 
-import static backend.week8.common.constant.Constant.NOT_FOUND_TASK_REQ;
 import static backend.week8.common.constant.Constant.TASK_REQ_IDS_EXECUTION_CONTEXT_KEY;
 
 @Component
 @RequiredArgsConstructor
 public class TaskReqItemProcessor implements ItemProcessor<DadDetReportCsvDto, DadDetReport> {
 	private final TaskReqRepository taskReqRepository;
-	private StepExecution stepExecution;
+	private final DadDetRepository dadDetRepository;
 	private ExecutionContext executionContext;
 
 	@BeforeStep
 	public void beforeStep(StepExecution stepExecution) {
-		this.stepExecution = stepExecution;
 		executionContext = stepExecution.getExecutionContext();
 	}
 
 	@Override
 	public DadDetReport process(DadDetReportCsvDto item) {
-		long taskReqId = executionContext.getLong(item.getFileName());
-		TaskReq taskReq = taskReqRepository.findById(taskReqId)
-				.orElseThrow(() -> new NoSuchElementException(NOT_FOUND_TASK_REQ));
-		String advId = taskReq.getMember()
-				.getMemberId();
+		String advId = dadDetRepository.findAdvIdByDadDetId(item.getDadDetId());
 		DadDetReportId dadDetReportId = new DadDetReportId(advId, item.getBaseDate(), item.getDadDetId());
 		return new DadDetReport(dadDetReportId, item.getImpressions(), item.getClicks(), item.getAverageImpressionRank(), item.getAverageClickCost(), item.getAdvertisingCost());
 	}
