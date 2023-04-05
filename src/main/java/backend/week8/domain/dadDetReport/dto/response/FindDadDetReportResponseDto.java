@@ -8,5 +8,6 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 public class FindDadDetReportResponseDto {
-	private List<ChartReportResponseDto> dadDetReport;
+	private List<ReportChartResponseDto> reportChart;
+	private List<ReportTableResponseDto> reportTable;
 }

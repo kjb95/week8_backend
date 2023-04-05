@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 public class DadDetReportController {
 	private final DadDetReportService dadDetReportService;
 
-
 	/**
 	 * 리포트 차트 데이터 조회
 	 */

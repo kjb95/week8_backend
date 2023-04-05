@@ -1,10 +1,8 @@
 package backend.week8.domain.dadDetReport.service;
 
 import backend.week8.domain.dadDetReport.dto.enums.ChartReportCategory;
-import backend.week8.domain.dadDetReport.dto.response.ChartReportResponseDto;
-import backend.week8.domain.dadDetReport.dto.response.DadDetReportCategoryResponseDto;
-import backend.week8.domain.dadDetReport.dto.response.FindAllDadDetReportCategoryResponseDto;
-import backend.week8.domain.dadDetReport.dto.response.FindDadDetReportResponseDto;
+import backend.week8.domain.dadDetReport.dto.response.*;
+import backend.week8.domain.dadDetReport.entity.DadDetReport;
 import backend.week8.domain.dadDetReport.repository.DadDetReportRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -25,10 +23,17 @@ public class DadDetReportService {
 	 * 리포트 차트 데이터 조회
 	 */
 	public FindDadDetReportResponseDto findDadDetReport(long dadDetId) {
-		List<ChartReportResponseDto> chartReports = new ArrayList<>();
-		dadDetReportRepository.findByDadDetReportId_DadDetId(dadDetId)
-				.forEach(dadDetReport -> chartReports.addAll(dadDetReport.createChartReport()));
-		return new FindDadDetReportResponseDto(chartReports);
+		List<ReportChartResponseDto> reportChart = new ArrayList<>();
+		ReportTableResponseDtos reportTableResponseDtos = new ReportTableResponseDtos();
+		dadDetReportRepository.findByDadDetReportId_DadDetIdOrderByDadDetReportId_BaseDateDesc(dadDetId)
+				.forEach(dadDetReport -> computeDadDetReport(reportChart, reportTableResponseDtos, dadDetReport));
+		reportTableResponseDtos.computeStatistics();
+		return new FindDadDetReportResponseDto(reportChart, reportTableResponseDtos.getReportTable());
+	}
+
+	private void computeDadDetReport(List<ReportChartResponseDto> reportChart, ReportTableResponseDtos reportTableResponseDtos, DadDetReport dadDetReport) {
+		reportChart.addAll(dadDetReport.createReportChart());
+		reportTableResponseDtos.add(dadDetReport.createReportTable());
 	}
 
 	/**

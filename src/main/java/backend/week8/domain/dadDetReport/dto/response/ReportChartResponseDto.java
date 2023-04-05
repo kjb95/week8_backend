@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class ChartReportResponseDto {
+public class ReportChartResponseDto {
 	private String date;
 	private String category;
 	private double value;

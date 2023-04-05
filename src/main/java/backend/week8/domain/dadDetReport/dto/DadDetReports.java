@@ -5,7 +5,7 @@ import lombok.Getter;
 
 import java.util.List;
 
-import static backend.week8.common.utils.Utils.roundTwo;
+import static backend.week8.common.utils.Utils.roundOne;
 
 @Getter
 public class DadDetReports {
@@ -14,8 +14,8 @@ public class DadDetReports {
 		this.dadDetReports = dadDetReports;
 		dadDetReports.forEach(this::computeDadDetReport);
 		int size = dadDetReports.size();
-		avgOfAverageImpressionRank = roundTwo(avgOfAverageImpressionRank /= size);
-		avgOfAverageClickCost = roundTwo(avgOfAverageClickCost /= size);
+		avgOfAverageImpressionRank = roundOne(avgOfAverageImpressionRank / size);
+		avgOfAverageClickCost = roundOne(avgOfAverageClickCost / size);
 	}
 
 	private List<DadDetReport> dadDetReports;

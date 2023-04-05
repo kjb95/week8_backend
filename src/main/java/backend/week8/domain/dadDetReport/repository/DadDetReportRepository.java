@@ -9,5 +9,5 @@ import java.util.List;
 
 @Repository
 public interface DadDetReportRepository extends JpaRepository<DadDetReport, DadDetReportId> {
-	List<DadDetReport> findByDadDetReportId_DadDetId(Long dadDetId);
+	List<DadDetReport> findByDadDetReportId_DadDetIdOrderByDadDetReportId_BaseDateDesc(Long dadDetId);
 }

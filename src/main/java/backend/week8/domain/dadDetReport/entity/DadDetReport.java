@@ -1,7 +1,8 @@
 package backend.week8.domain.dadDetReport.entity;
 
 import backend.week8.domain.dadDetReport.dto.enums.ChartReportCategory;
-import backend.week8.domain.dadDetReport.dto.response.ChartReportResponseDto;
+import backend.week8.domain.dadDetReport.dto.response.ReportChartResponseDto;
+import backend.week8.domain.dadDetReport.dto.response.ReportTableResponseDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,6 +13,8 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
+
+import static backend.week8.common.utils.Utils.roundOne;
 
 @Table(name = "DAD_DET_REPORT")
 @Entity
@@ -32,13 +35,20 @@ public class DadDetReport {
 	@Column(name = "ADVERTISING_COST")
 	private int advertisingCost;
 
-	public List<ChartReportResponseDto> createChartReport() {
-		List<ChartReportResponseDto> chartReport = new ArrayList<>();
-		chartReport.add(new ChartReportResponseDto(dadDetReportId.getBaseDate(), ChartReportCategory.IMPRESSIONS.getDescription(), impressions));
-		chartReport.add(new ChartReportResponseDto(dadDetReportId.getBaseDate(), ChartReportCategory.CLICKS.getDescription(), clicks));
-		chartReport.add(new ChartReportResponseDto(dadDetReportId.getBaseDate(), ChartReportCategory.AVERAGE_IMPRESSION_RANK.getDescription(), averageImpressionRank));
-		chartReport.add(new ChartReportResponseDto(dadDetReportId.getBaseDate(), ChartReportCategory.AVERAGE_CLICK_COST.getDescription(), averageClickCost));
-		chartReport.add(new ChartReportResponseDto(dadDetReportId.getBaseDate(), ChartReportCategory.ADVERTISING_COST.getDescription(), advertisingCost));
-		return chartReport;
+	public List<ReportChartResponseDto> createReportChart() {
+		List<ReportChartResponseDto> reportChart = new ArrayList<>();
+		reportChart.add(new ReportChartResponseDto(dadDetReportId.getBaseDate(), ChartReportCategory.IMPRESSIONS.getDescription(), impressions));
+		reportChart.add(new ReportChartResponseDto(dadDetReportId.getBaseDate(), ChartReportCategory.CLICKS.getDescription(), clicks));
+		reportChart.add(new ReportChartResponseDto(dadDetReportId.getBaseDate(), ChartReportCategory.AVERAGE_IMPRESSION_RANK.getDescription(), averageImpressionRank));
+		reportChart.add(new ReportChartResponseDto(dadDetReportId.getBaseDate(), ChartReportCategory.AVERAGE_CLICK_COST.getDescription(), averageClickCost));
+		reportChart.add(new ReportChartResponseDto(dadDetReportId.getBaseDate(), ChartReportCategory.ADVERTISING_COST.getDescription(), advertisingCost));
+		return reportChart;
+	}
+
+	public ReportTableResponseDto createReportTable() {
+		String baseDate = dadDetReportId.getBaseDate();
+		String date = baseDate.substring(0, 4) + "." + baseDate.substring(4, 6) + "." + baseDate.substring(6);
+		String clicksRate = roundOne(((double) clicks * 100 / impressions)) + "%";
+		return new ReportTableResponseDto(dadDetReportId.getBaseDate(), date, impressions, clicks, clicksRate, averageImpressionRank, averageClickCost, advertisingCost);
 	}
 }
