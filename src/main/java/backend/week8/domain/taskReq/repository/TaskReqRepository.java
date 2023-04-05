@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 @Repository
 public interface TaskReqRepository extends JpaRepository<TaskReq, Long> {
@@ -30,4 +31,9 @@ public interface TaskReqRepository extends JpaRepository<TaskReq, Long> {
 	@Query("UPDATE TaskReq t SET t.status=:status, t.startTime=:startTime WHERE t.id IN :ids")
 	@Transactional
 	void updateStatusAndStartTime(List<Long> ids, TaskStatus status, LocalDateTime startTime);
+
+	@Modifying(clearAutomatically = true)
+	@Query("UPDATE TaskReq t SET t.status=:status, t.endTime=:endTime WHERE t.reqFilePath IN :fileNames")
+	@Transactional
+	void updateStatusAndEndTime(Set<String> fileNames, TaskStatus status, LocalDateTime endTime);
 }

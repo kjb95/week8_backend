@@ -14,5 +14,7 @@ public class Constant {
 	public static final String DUPLICATED_CHECK_KWD = "이미 등록된 검수 대상 키워드 입니다";
 
 	public static final String UNSELLABLE_KEYWORD = "는(은) 판매가 불가능한 키워드 입니다";
+
 	public static final String TASK_REQ_IDS_EXECUTION_CONTEXT_KEY = "taskReqIds";
+	public static final String ERROR_FILE_NAME_LIST = "errorFileNameList";
 }

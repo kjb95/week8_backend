@@ -38,6 +38,7 @@ public class ReportTableResponseDtos {
 	}
 
 	public void computeStatistics() {
-		reportTable.add(new ReportTableResponseDto("statistics", "합계", sumOfImpressions, sumOfClicks, computeClickRate(), computeAverageImpressionRank(), computeAverageClickCost(), sumOfAdvertisingCost));
+		reportTable.add(new ReportTableResponseDto("statistics", "총 " + reportTable.size() + "건 합계", sumOfImpressions, sumOfClicks, computeClickRate(), computeAverageImpressionRank(), computeAverageClickCost(),
+				sumOfAdvertisingCost));
 	}
 }

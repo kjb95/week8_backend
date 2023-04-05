@@ -58,20 +58,4 @@ public class TaskReq {
 	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
 	@Column(name = "TASK_END_TIME")
 	private LocalDateTime endTime;
-
-	public void updateTaskStatusIng() {
-		status = TaskStatus.ING;
-	}
-
-	public void updateTaskStatusComplete() {
-		status = TaskStatus.COMPLETE;
-	}
-
-	public void updateStartTime() {
-		startTime = LocalDateTime.now();
-	}
-
-	public void updateEndTime() {
-		endTime = LocalDateTime.now();
-	}
 }

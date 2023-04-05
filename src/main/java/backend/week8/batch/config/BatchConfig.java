@@ -16,6 +16,8 @@ import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.batch.core.repository.JobExecutionAlreadyRunningException;
 import org.springframework.batch.core.repository.JobInstanceAlreadyCompleteException;
 import org.springframework.batch.core.repository.JobRestartException;
+import org.springframework.batch.core.step.skip.AlwaysSkipItemSkipPolicy;
+import org.springframework.batch.item.file.FlatFileParseException;
 import org.springframework.batch.item.file.MultiResourceItemReader;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -53,6 +55,9 @@ public class BatchConfig {
 				.processor(taskReqItemProcessor)
 				.writer(new CustomJpaItemWriter(entityManagerFactory))
 				.listener(taskReqListener)
+				.faultTolerant()
+				.skipPolicy(new AlwaysSkipItemSkipPolicy())
+				.skip(FlatFileParseException.class)
 				.build();
 	}
 
