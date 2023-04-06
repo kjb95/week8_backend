@@ -3,6 +3,7 @@ package backend.week8.batch.writer;
 import backend.week8.domain.dadDetReport.dto.DadDetReports;
 import backend.week8.domain.dadDetReport.entity.DadDetReport;
 import backend.week8.domain.dadDetReport.entity.DadDetReportId;
+import lombok.AllArgsConstructor;
 import org.springframework.batch.item.database.JpaItemWriter;
 import org.springframework.dao.DataAccessResourceFailureException;
 import org.springframework.orm.jpa.EntityManagerFactoryUtils;
@@ -14,12 +15,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@AllArgsConstructor
 public class CustomJpaItemWriter<T> extends JpaItemWriter<T> {
 	private final EntityManagerFactory entityManagerFactory;
-
-	public CustomJpaItemWriter(EntityManagerFactory entityManagerFactory) {
-		this.entityManagerFactory = entityManagerFactory;
-	}
 
 	@Override
 	public void write(List<? extends T> items) {
@@ -30,6 +28,7 @@ public class CustomJpaItemWriter<T> extends JpaItemWriter<T> {
 				.stream()
 				.map(this::computeAvgDadDetReport)
 				.collect(Collectors.toList());
+		// JpaItemWriter Original Code
 		EntityManager entityManager = EntityManagerFactoryUtils.getTransactionalEntityManager(entityManagerFactory);
 		if (entityManager == null) {
 			throw new DataAccessResourceFailureException("Unable to obtain a transactional EntityManager");

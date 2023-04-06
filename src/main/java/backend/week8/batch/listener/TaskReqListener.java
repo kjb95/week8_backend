@@ -10,7 +10,7 @@ import org.springframework.batch.core.annotation.AfterStep;
 import org.springframework.batch.core.annotation.BeforeStep;
 import org.springframework.batch.core.annotation.OnReadError;
 import org.springframework.batch.item.ExecutionContext;
-import org.springframework.batch.item.file.FlatFileParseException;
+import org.springframework.batch.item.ItemStreamException;
 import org.springframework.batch.item.file.MultiResourceItemReader;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
@@ -81,7 +81,7 @@ public class TaskReqListener {
 
 	@OnReadError
 	public void onReadError(Exception e) {
-		if (e instanceof FlatFileParseException) {
+		if (e instanceof ItemStreamException) {
 			recordErrorFileName();
 		}
 	}

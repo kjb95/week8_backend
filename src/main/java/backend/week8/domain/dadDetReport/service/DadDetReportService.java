@@ -8,9 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -28,6 +26,7 @@ public class DadDetReportService {
 		dadDetReportRepository.findByDadDetReportId_DadDetIdOrderByDadDetReportId_BaseDateDesc(dadDetId)
 				.forEach(dadDetReport -> computeDadDetReport(reportChart, reportTableResponseDtos, dadDetReport));
 		reportTableResponseDtos.computeStatistics();
+		Collections.sort(reportChart);
 		return new FindDadDetReportResponseDto(reportChart, reportTableResponseDtos.getReportTable());
 	}
 
