@@ -27,4 +27,9 @@ public class DadDetReportId implements Serializable {
 		result = 31 * result + (dadDetId != null ? dadDetId.hashCode() : 0);
 		return result;
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		return super.equals(obj);
+	}
 }

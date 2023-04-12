@@ -1,4 +1,4 @@
-package backend.week8.jwt.dto;
+package backend.week8.jwt.dto.request;
 
 import lombok.*;
 

@@ -1,4 +1,4 @@
-package backend.week8.jwt.dto;
+package backend.week8.jwt.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

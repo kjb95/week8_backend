@@ -59,7 +59,7 @@ public class BatchConfig {
 				.build();
 	}
 
-	@Scheduled(fixedDelay = 30000)
+	@Scheduled(fixedDelay = 40000)
 	public void runTaskReqJob() throws JobInstanceAlreadyCompleteException, JobExecutionAlreadyRunningException, JobParametersInvalidException, JobRestartException {
 		List<TaskReq> taskReqs = taskReqRepository.findByStatus(TaskStatus.REQ);
 		if (taskReqs == null || taskReqs.size() == 0) {
